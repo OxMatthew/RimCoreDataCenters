@@ -1,6 +1,6 @@
 # RimCore Data Centers
 
-A RimWorld 1.5 mod that lets you research, build and run a data center: networked server racks that
+A RimWorld 1.5 / 1.6 mod that lets you research, build and run a data center: networked server racks that
 produce valuable **Data Cartridges** for traders, kept alive by power, precision cooling, a UPS and
 colonists who monitor and service the equipment.
 
