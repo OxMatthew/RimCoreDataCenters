@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    BALANCE SUMMARY (all values are per building; see docs/BALANCE.md for the reasoning)
+      Server Rack          450 W   8.0 heat/s   120 steel + 8 components + 10 gold   1 cartridge / 0.6 day
+      Network Core         150 W   3.0 heat/s   100 steel + 6 components + 8 gold    serves 6 racks within 12.9 cells
+      Precision Cooling    480 W   -55 heat/s   150 steel + 6 components             cools toward 24 C (adjustable 10 to 30 C)
+      UPS Unit             none    none         60 steel + 4 components + 12 gold    100 Wd at 70% efficiency (vanilla battery: 600 Wd)
+      Operations Console   100 W   1.5 heat/s   60 steel + 4 components              1 h shift gives 1 day of monitoring
+  -->
+
+  <!-- ======================================== SERVER RACK ======================================== -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_ServerRack</defName>
+    <label>server rack</label>
+    <description>A tall, ventilated cabinet packed with compute and storage blades. Linked to a network core, powered, kept cool and serviced regularly, it compiles valuable data cartridges that traders buy. Uses a lot of power and gives off a lot of heat. Cartridges appear on the tile in front of the rack.</description>
+    <thingClass>Building</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>RCDC/Things/Building/ServerRack</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.8,0.7,0.8)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>0.75</fillPercent>
+    <disableImpassableShotOverConfigError>true</disableImpassableShotOverConfigError>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>true</rotatable>
+    <size>(1,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>180</MaxHitPoints>
+      <WorkToBuild>3600</WorkToBuild>
+      <Mass>45</Mass>
+      <Flammability>0.5</Flammability>
+      <Beauty>-2</Beauty>
+    </statBases>
+    <costList>
+      <Steel>120</Steel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <Gold>10</Gold>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>450</basePowerConsumption>
+        <soundAmbientPowered>RCDC_ServerHum</soundAmbientPowered>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>2.5</glowRadius>
+        <glowColor>(90,140,255,0)</glowColor>
+      </li>
+      <li Class="RimCore.DataCenters.CompProperties_ServerRack">
+        <outputThing>RCDC_DataCartridge</outputThing>
+        <outputOptions>
+          <li>RCDC_DataCartridge</li>
+          <li>RCDC_DataCartridge_Research</li>
+          <li>RCDC_DataCartridge_Financial</li>
+          <li>RCDC_DataCartridge_Medical</li>
+        </outputOptions>
+        <ticksPerCartridge>36000</ticksPerCartridge>
+        <cartridgesPerCycle>1</cartridgesPerCycle>
+        <heatPerSecond>8</heatPerSecond>
+        <standbyHeatFactor>0.15</standbyHeatFactor>
+        <standbyPowerFactor>0.2</standbyPowerFactor>
+        <maxHeatPushTemperature>60</maxHeatPushTemperature>
+        <warmTemperature>32</warmTemperature>
+        <shutdownTemperature>50</shutdownTemperature>
+        <restartTemperature>40</restartTemperature>
+        <minTemperatureEfficiency>0.25</minTemperatureEfficiency>
+        <daysToFullWear>12</daysToFullWear>
+        <serviceThreshold>0.5</serviceThreshold>
+        <forcedServiceThreshold>0.1</forcedServiceThreshold>
+        <minWearEfficiency>0.35</minWearEfficiency>
+        <unmonitoredOutputFactor>0.65</unmonitoredOutputFactor>
+        <unmonitoredWearFactor>1.35</unmonitoredWearFactor>
+        <throttledWearFactor>1.5</throttledWearFactor>
+        <serviceWorkTicks>1500</serviceWorkTicks>
+        <serviceItem>ComponentIndustrial</serviceItem>
+        <serviceItemCount>1</serviceItemCount>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2010</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- ======================================== NETWORK CORE ======================================== -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_NetworkCore</defName>
+    <label>network core</label>
+    <description>The switching and control hub of a data center. Every server rack must be linked to a powered network core within range to operate, and each core can only serve a limited number of racks. Select it to see its range and which racks are linked.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>RCDC/Things/Building/NetworkCore</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+      <shadowData>
+        <volume>(1.7,0.6,0.8)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>0.6</fillPercent>
+    <disableImpassableShotOverConfigError>true</disableImpassableShotOverConfigError>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>2800</WorkToBuild>
+      <Mass>30</Mass>
+      <Flammability>0.5</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <Gold>8</Gold>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <placeWorkers>
+      <li>RimCore.DataCenters.PlaceWorker_NetworkCoreRange</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+        <soundAmbientPowered>RCDC_ServerHum</soundAmbientPowered>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>2</glowRadius>
+        <glowColor>(70,190,255,0)</glowColor>
+      </li>
+      <li Class="RimCore.DataCenters.CompProperties_NetworkCore">
+        <maxRacks>6</maxRacks>
+        <range>12.9</range>
+        <heatPerSecond>3</heatPerSecond>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2020</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- ==================================== PRECISION COOLING UNIT ==================================== -->
+  <!-- Reuses the vanilla cooler behaviour (Building_Cooler): cold air out of the south side, hot exhaust
+       out of the north side, so the exhaust must vent outdoors or into another room. -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_PrecisionCoolingUnit</defName>
+    <label>precision cooling unit</label>
+    <description>A heavy-duty, wall-mounted air handler built for server rooms. It pulls a room toward its target temperature far faster than a standard cooler, but draws a lot of power. Cool air leaves one side while hot exhaust leaves the other, so vent the exhaust outdoors or into another room. Default target is 24 C.</description>
+    <thingClass>Building_Cooler</thingClass>
+    <graphicData>
+      <texPath>RCDC/Things/Building/PrecisionCooler</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>1</fillPercent>
+    <coversFloor>true</coversFloor>
+    <blockLight>true</blockLight>
+    <canOverlapZones>false</canOverlapZones>
+    <castEdgeShadows>true</castEdgeShadows>
+    <blockWeather>true</blockWeather>
+    <staticSunShadowHeight>1.0</staticSunShadowHeight>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <WorkToBuild>3400</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>0.4</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <costList>
+      <Steel>150</Steel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+    </costList>
+    <building>
+      <canPlaceOverWall>true</canPlaceOverWall>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_Cooler</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>480</basePowerConsumption>
+        <soundAmbientPowered>RCDC_CoolerFan</soundAmbientPowered>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_TempControl">
+        <energyPerSecond>-55</energyPerSecond>
+        <defaultTargetTemperature>24</defaultTargetTemperature>
+        <minTargetTemperature>10</minTargetTemperature>
+        <maxTargetTemperature>30</maxTargetTemperature>
+        <lowPowerConsumptionFactor>0.12</lowPowerConsumptionFactor>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2030</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- ============================================ UPS ============================================ -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_UpsUnit</defName>
+    <label>UPS unit</label>
+    <description>A compact uninterruptible power supply. It rides through short outages and generator hiccups so the data center keeps running for a little while. It stores only a fraction of what a standard battery does, so it complements rather than replaces a real battery bank.</description>
+    <thingClass>RimCore.DataCenters.Building_UpsUnit</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>RCDC/Things/Building/UpsUnit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.7,0.4,0.7)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <blockWind>true</blockWind>
+    <fillPercent>0.35</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>false</rotatable>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsPower</li>
+    </thingCategories>
+    <tickerType>Normal</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1800</WorkToBuild>
+      <Mass>12</Mass>
+      <Flammability>0.4</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <Gold>12</Gold>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Battery">
+        <storedEnergyMax>100</storedEnergyMax>
+        <efficiency>0.7</efficiency>
+        <transmitsPower>true</transmitsPower>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2040</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- ===================================== OPERATIONS CONSOLE ===================================== -->
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_OperationsConsole</defName>
+    <label>operations console</label>
+    <description>A monitoring desk for the data center. A colonist working the Data Center Operations job here runs a monitoring and diagnostics shift; while the network is monitored its racks run at full output and wear at the normal rate. Skilled operators finish shifts faster. The console must be within range of a powered network core.</description>
+    <thingClass>Building</thingClass>
+    <graphicData>
+      <texPath>RCDC/Things/Building/OperationsConsole</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+      <shadowData>
+        <volume>(1.8,0.4,0.7)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <blockWind>true</blockWind>
+    <fillPercent>0.4</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>true</rotatable>
+    <size>(2,1)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <WorkToBuild>1600</WorkToBuild>
+      <Mass>25</Mass>
+      <Flammability>0.6</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+    <costList>
+      <Steel>60</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(120,200,255,0)</glowColor>
+      </li>
+      <li Class="RimCore.DataCenters.CompProperties_OperationsConsole">
+        <shiftWorkAmount>2400</shiftWorkAmount>
+        <coverageTicks>60000</coverageTicks>
+        <shiftDueBelowTicks>15000</shiftDueBelowTicks>
+        <wearReliefPerShift>0.05</wearReliefPerShift>
+        <heatPerSecond>1.5</heatPerSecond>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2050</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+</Defs>

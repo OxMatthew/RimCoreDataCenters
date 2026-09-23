@@ -1,0 +1,17 @@
+Steam Workshop tags for RimCore Data Centers
+============================================
+
+Set automatically by RimWorld's built-in uploader (read from the game's code):
+  Mod
+  1.5
+
+Recommended to add on the Workshop item page, choosing only from the tags Steam offers there
+(the list is controlled by Steam/Ludeon and can change):
+  Buildings
+  Economy / Trading
+  Research
+  Power / Electricity
+  Quality of life: NO   (this is new content, not a tweak)
+  Vanilla-friendly: YES (no patches to vanilla code, no Harmony)
+
+Not applicable: Translation, Scenario.

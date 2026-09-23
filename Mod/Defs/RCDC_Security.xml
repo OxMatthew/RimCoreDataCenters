@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    SECURITY DOORS (both are ordinary vanilla-style doors with one extra rule: who may open them)
+
+      Biometric Access Door   60 W   30 steel + 4 components + 6 gold + 25 stuff   colony members only
+      Metal Detector Gate     90 W   40 steel + 4 components + 25 stuff           colony members + unarmed visitors
+
+    With no power a scanner cannot recognise anyone: it fails secure and admits colony members only.
+    Having one working door of each kind on the map is what earns the secure-certification price premium.
+  -->
+
+  <ThingDef ParentName="DoorBase">
+    <defName>RCDC_BiometricDoor</defName>
+    <label>biometric access door</label>
+    <description>A powered door with a facial scanner. Colonists (and colony slaves) walk straight through; visitors, guests and prisoners are turned away and the attempt is logged. Animals use it like any door. With no power the scanner cannot recognise anyone and only colony members can open it. Raiders still have to break it down.</description>
+    <thingClass>RimCore.DataCenters.Building_AccessDoor</thingClass>
+    <statBases>
+      <WorkToBuild>2400</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+    </statBases>
+    <graphicData>
+      <texPath>RCDC/Things/Building/BiometricDoor_Mover</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <damageData>
+        <enabled>false</enabled>
+      </damageData>
+    </graphicData>
+    <uiIconPath>RCDC/Things/Building/BiometricDoor_MenuIcon</uiIconPath>
+    <costStuffCount>25</costStuffCount>
+    <costList>
+      <Steel>30</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>60</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.AccessDoorExtension">
+        <kind>Biometric</kind>
+      </li>
+    </modExtensions>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2060</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_AccessControl</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <ThingDef ParentName="DoorBase">
+    <defName>RCDC_MetalDetectorGate</defName>
+    <label>metal detector gate</label>
+    <description>A powered walk-through gate that scans for weapons. Colonists (and colony slaves) pass freely and unarmed visitors are let through, but anyone carrying a weapon is turned away and the attempt is logged. With no power it cannot scan and only colony members can open it. Raiders still have to break it down.</description>
+    <thingClass>RimCore.DataCenters.Building_AccessDoor</thingClass>
+    <statBases>
+      <WorkToBuild>2600</WorkToBuild>
+      <MaxHitPoints>200</MaxHitPoints>
+    </statBases>
+    <graphicData>
+      <texPath>RCDC/Things/Building/MetalDetector_Mover</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <damageData>
+        <enabled>false</enabled>
+      </damageData>
+    </graphicData>
+    <uiIconPath>RCDC/Things/Building/MetalDetector_MenuIcon</uiIconPath>
+    <costStuffCount>25</costStuffCount>
+    <costList>
+      <Steel>40</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>90</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.AccessDoorExtension">
+        <kind>MetalDetector</kind>
+      </li>
+    </modExtensions>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2070</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_ThreatScreening</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+  </ThingDef>
+
+</Defs>

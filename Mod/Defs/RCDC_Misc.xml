@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Architect menu tab. Hidden until the research project is finished. -->
+  <DesignationCategoryDef>
+    <defName>RCDC_DataCenter</defName>
+    <label>data center</label>
+    <description>Server racks, network cores, precision cooling, UPS units and operations consoles.</description>
+    <order>350</order>
+    <showPowerGrid>true</showPowerGrid>
+    <specialDesignatorClasses>
+      <li>Designator_Cancel</li>
+      <li>Designator_Deconstruct</li>
+    </specialDesignatorClasses>
+    <researchPrerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </researchPrerequisites>
+  </DesignationCategoryDef>
+
+  <ThingCategoryDef>
+    <defName>RCDC_DataMedia</defName>
+    <label>data media</label>
+    <parent>Manufactured</parent>
+  </ThingCategoryDef>
+
+  <!-- One work type covers both data center jobs (skills: Intellectual + Construction). -->
+  <WorkTypeDef>
+    <defName>RCDC_DataCenter</defName>
+    <labelShort>data center</labelShort>
+    <pawnLabel>Data Center Technician</pawnLabel>
+    <gerundLabel>working in the data center</gerundLabel>
+    <description>Operate the data center console and service server racks.</description>
+    <verb>Operate</verb>
+    <naturalPriority>260</naturalPriority>
+    <disabledForSlaves>true</disabledForSlaves>
+    <relevantSkills>
+      <li>Intellectual</li>
+      <li>Construction</li>
+    </relevantSkills>
+    <workTags>
+      <li>Intellectual</li>
+      <li>Commoner</li>
+      <li>AllWork</li>
+    </workTags>
+  </WorkTypeDef>
+
+  <!-- Higher priorityInType is offered first: servicing a worn rack beats routine monitoring. -->
+  <WorkGiverDef>
+    <defName>RCDC_ServiceRack</defName>
+    <label>service server racks</label>
+    <giverClass>RimCore.DataCenters.WorkGiver_ServiceRack</giverClass>
+    <workType>RCDC_DataCenter</workType>
+    <priorityInType>60</priorityInType>
+    <verb>service</verb>
+    <gerund>servicing</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>RCDC_DataCenterOperations</defName>
+    <label>operate the data center</label>
+    <giverClass>RimCore.DataCenters.WorkGiver_DataCenterOperations</giverClass>
+    <workType>RCDC_DataCenter</workType>
+    <priorityInType>50</priorityInType>
+    <verb>operate</verb>
+    <gerund>operating</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <JobDef>
+    <defName>RCDC_DataCenterOperations</defName>
+    <driverClass>RimCore.DataCenters.JobDriver_DataCenterOperations</driverClass>
+    <reportString>running a data center operations shift at TargetA.</reportString>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+
+  <JobDef>
+    <defName>RCDC_ServiceRack</defName>
+    <driverClass>RimCore.DataCenters.JobDriver_ServiceRack</driverClass>
+    <reportString>servicing TargetA.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+  </JobDef>
+
+</Defs>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    Data contracts: a trader periodically offers a timed bulk order (see
+    Source/RimCoreDataCenters/Economy/MapComponent_DataContracts.cs). Only offered on a map that already has
+    a spawned server rack. All numbers live here so the whole system is rebalanced from one place.
+  -->
+  <RimCore.DataCenters.DataContractSettingsDef>
+    <defName>RCDC_DataContractSettings</defName>
+    <offerCooldownMinDays>5</offerCooldownMinDays>
+    <offerCooldownMaxDays>10</offerCooldownMaxDays>
+    <offerTimeoutDays>3</offerTimeoutDays>
+    <quantityMin>15</quantityMin>
+    <quantityMax>35</quantityMax>
+    <bonusPercentMin>0.20</bonusPercentMin>
+    <bonusPercentMax>0.40</bonusPercentMax>
+    <deadlineMinDays>4</deadlineMinDays>
+    <deadlineMaxDays>8</deadlineMaxDays>
+  </RimCore.DataCenters.DataContractSettingsDef>
+
+  <LetterDef>
+    <defName>RCDC_ContractLetter</defName>
+    <letterClass>RimCore.DataCenters.ChoiceLetter_DataContract</letterClass>
+    <color>(0.85,0.75,0.25)</color>
+    <flashColor>(0.85,0.75,0.25)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
+  </LetterDef>
+
+</Defs>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    THE AI CORE
+      800 W, 6 heat/s, 100 steel + 12 components + 25 gold + 20 plasteel, 2x2.
+    It is a simulated character, not a language model: every line it says is a keyed string and everything
+    it does is bookkeeping over the racks' real state. All the numbers below the building (directives, requests,
+    rapport, glitches) live in its CompProperties_AiCore block and can be tuned there.
+  -->
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>RCDC_AiCore</defName>
+    <label>AI core</label>
+    <description>A self-contained cognitive core that runs the data center on its own: it keeps every linked rack monitored without operations shifts, forecasts when each rack will need service, writes status reports and follows a directive you choose. It has a personality, gets on better with you the better the data center is run, and now and then asks for a favour. It draws a lot of power and needs a network core in range and a cool room. Nothing it does is hostile: at worst it reboots, sulks for a day or loses one rack's cartridge progress.</description>
+    <thingClass>Building</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>RCDC/Things/Building/AiCore</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
+      <shadowData>
+        <volume>(1.7,0.9,1.7)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <blockWind>true</blockWind>
+    <fillPercent>0.8</fillPercent>
+    <disableImpassableShotOverConfigError>true</disableImpassableShotOverConfigError>
+    <castEdgeShadows>true</castEdgeShadows>
+    <rotatable>true</rotatable>
+    <size>(2,2)</size>
+    <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToBuild>6000</WorkToBuild>
+      <Mass>60</Mass>
+      <Flammability>0.4</Flammability>
+      <Beauty>2</Beauty>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>12</ComponentIndustrial>
+      <Gold>25</Gold>
+      <Plasteel>20</Plasteel>
+    </costList>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>800</basePowerConsumption>
+        <soundAmbientPowered>RCDC_ServerHum</soundAmbientPowered>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(120,150,255,0)</glowColor>
+      </li>
+      <li Class="RimCore.DataCenters.CompProperties_AiCore">
+        <heatPerSecond>6</heatPerSecond>
+        <maxOperatingTemperature>45</maxOperatingTemperature>
+        <startRapport>50</startRapport>
+        <minStrength>0.5</minStrength>
+        <diagnosticsWear>0.9</diagnosticsWear>
+        <efficiencyOutput>1.10</efficiencyOutput>
+        <efficiencyHeat>1.20</efficiencyHeat>
+        <efficiencyPower>1.25</efficiencyPower>
+        <stewardshipWear>0.75</stewardshipWear>
+        <stewardshipTolerance>2</stewardshipTolerance>
+        <stewardshipOutput>0.95</stewardshipOutput>
+        <curiosityResearchPerRack>0.02</curiosityResearchPerRack>
+        <curiosityResearchCap>0.10</curiosityResearchCap>
+        <curiosityOutput>0.92</curiosityOutput>
+        <requestMinDays>8</requestMinDays>
+        <requestMaxDays>14</requestMaxDays>
+        <requestTimeoutDays>5</requestTimeoutDays>
+        <loanTicks>60000</loanTicks>
+        <loanOutput>0.8</loanOutput>
+        <loanResearchMultiplier>2</loanResearchMultiplier>
+        <overclockTicks>60000</overclockTicks>
+        <overclockOutput>1.25</overclockOutput>
+        <overclockHeat>1.4</overclockHeat>
+        <diagnosticsTicks>7500</diagnosticsTicks>
+        <diagnosticsOutput>0.5</diagnosticsOutput>
+        <diagnosticsWearRelief>0.2</diagnosticsWearRelief>
+        <dailyGain>1</dailyGain>
+        <dailyLoss>1</dailyLoss>
+        <dailyOfflineLoss>3</dailyOfflineLoss>
+        <acceptGain>5</acceptGain>
+        <declineLoss>2</declineLoss>
+        <ignoredLoss>4</ignoredLoss>
+        <glitchCalmDays>45</glitchCalmDays>
+        <glitchUneasyDays>25</glitchUneasyDays>
+        <glitchTenseDays>12</glitchTenseDays>
+        <certifiedGlitchRate>0.5</certifiedGlitchRate>
+        <rebootMinTicks>2500</rebootMinTicks>
+        <rebootMaxTicks>5000</rebootMaxTicks>
+        <sulkTicks>60000</sulkTicks>
+        <milestoneEvery>100</milestoneEvery>
+      </li>
+    </comps>
+    <designationCategory>RCDC_DataCenter</designationCategory>
+    <uiOrder>2080</uiOrder>
+    <researchPrerequisites>
+      <li>RCDC_CognitiveComputing</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <!-- ============================ Research ============================ -->
+
+  <ResearchProjectDef>
+    <defName>RCDC_CognitiveComputing</defName>
+    <label>cognitive computing</label>
+    <description>Adaptive, self-directing software running on dedicated hardware. Unlocks the AI core: an on-site intelligence that monitors the whole data center by itself, forecasts maintenance, writes status reports and follows a directive you set. It has a personality and a working relationship with you, and it asks for small favours now and then.</description>
+    <baseCost>5500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>RCDC_DistributedComputing</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>6.35</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_AdaptiveLearning</defName>
+    <label>adaptive learning</label>
+    <description>Lets the AI core learn from every shift and every fault. Its directive and diagnostics work 15% harder at the same rapport, and its glitches become 30% rarer.</description>
+    <baseCost>3500</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>RCDC_CognitiveComputing</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>7.15</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <aiBenefitBonus>0.15</aiBenefitBonus>
+        <aiGlitchReduction>0.3</aiGlitchReduction>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <!-- ============================ Letter and sound ============================ -->
+
+  <LetterDef>
+    <defName>RCDC_AiLetter</defName>
+    <letterClass>RimCore.DataCenters.ChoiceLetter_AiRequest</letterClass>
+    <color>(0.35,0.75,1)</color>
+    <flashColor>(0.35,0.75,1)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
+  </LetterDef>
+
+  <!-- Soft three-note chime that goes with the AI's messages. -->
+  <SoundDef>
+    <defName>RCDC_AiChime</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>RCDC/AiChime</clipPath>
+          </li>
+        </grains>
+        <volumeRange>9~9</volumeRange>
+        <distRange>0~20</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

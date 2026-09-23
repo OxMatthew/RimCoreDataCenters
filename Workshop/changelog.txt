@@ -1,0 +1,44 @@
+[h1]0.5.0 - data contracts[/h1]
+[list]
+[*] New: once a server rack is running, a buyer occasionally offers a timed data contract - deliver N cartridges of a given type within a deadline for a 20-40% silver bonus over market value.
+[*] Accept, decline, or let the offer lapse - nothing is ever taken from you for saying no. Fulfilling one drops the silver bonus near your trade spot; missing the deadline just expires it, no penalty.
+[/list]
+
+[h1]0.4.0 update - RimWorld 1.6 support[/h1]
+[list]
+[*] Added a real RimWorld 1.6 build, packaged alongside the existing 1.5 build - the mod now supports both versions from one download.
+[*] RimWorld 1.6 changed a few base-game APIs this mod uses; verified with the full 430-check self-test suite, run twice clean against a real 1.6 install and again against 1.5.
+[/list]
+
+[h1]0.3.0 - the AI core[/h1]
+[list]
+[*] New building: the AI core ("Meridian"), unlocked by Cognitive Computing. It monitors the whole data center by itself (no operations shifts needed), forecasts when each rack needs service, and writes a real status report on request.
+[*] Directives: Balanced, Efficiency, Stewardship and Curiosity. Each trades something for something else.
+[*] Rapport: it gets on better with you when the data center is healthy. Its benefits scale with rapport.
+[*] Requests: every week or two a letter with a small choice (lend compute to research, overclock window, maintenance window).
+[*] Small, harmless risks only: a reboot, a day of sulking, or one rack losing its current cartridge progress. Nothing hostile. Security certification halves how often.
+[*] Adaptive Learning research: stronger AI, rarer glitches. New "AI core down" alert.
+[*] No network access, no language model: every line is a translatable string.
+[*] Saves from 0.1.0 and 0.2.0 load unchanged.
+[/list]
+
+[h1]0.2.0 - upgrade tree, research uplink and security[/h1]
+[list]
+[*] Nine follow-up research projects: Optimized Firmware, Immersion Cooling, Predictive Maintenance, Network Fabric, Redundant Power, Distributed Computing, Autonomous Operations, Access Control, Threat Screening and Secure Certification. Every effect is an XML value.
+[*] Research uplink: each running rack adds research speed for all your colonists (+4% each up to +20%; Distributed Computing raises it to +7% each up to +45%).
+[*] Biometric Access Door: a powered facial-scanner door that only colony members can open.
+[*] Metal Detector Gate: colony members and unarmed visitors pass, anyone carrying a weapon is turned away.
+[*] Access log, message, sound and an Access denied alert. Scanners fail secure without power.
+[*] Secure Certification: with a working door of each kind, data cartridges sell for 20% more.
+[*] Saves from 0.1.0 load unchanged. Still RimWorld 1.5 only, with no DLC, no Harmony and no other mods required.
+[/list]
+
+[h1]0.1.0 - initial release[/h1]
+[list]
+[*] Research project: Data Center Infrastructure.
+[*] Server Rack, Network Core, Precision Cooling Unit, UPS Unit and Operations Console, plus the Data Cartridge item.
+[*] Racks need power, a Network Core link and a safe temperature; wear and heat slow them down and eventually stop them.
+[*] New "Data center" work type: operations shifts and rack servicing use Intellectual and Construction skill.
+[*] Alerts, messages, status lights, sounds, inspect text, debug actions and an in-game self-test.
+[*] Supports RimWorld 1.5. No DLC, no Harmony, no other mods required.
+[/list]

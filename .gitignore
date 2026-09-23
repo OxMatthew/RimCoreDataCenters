@@ -1,0 +1,43 @@
+# Build output and caches
+bin/
+obj/
+*.pdb
+*.cache
+*.user
+*.suo
+
+# IDE settings
+.vs/
+.vscode/
+.idea/
+*.csproj.user
+
+# Test profile, saves and logs written by Tools/Test-InGame.ps1
+.testprofile/
+.selftest-out.txt
+.scene-out.txt
+*.log
+*.rws
+*.rwm
+
+# Release output (rebuild it with Tools/Release.ps1)
+Release/
+
+# Temporary and OS files
+*.tmp
+*.bak
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Steam / secrets: never commit these
+*.vdf
+steam_appid.txt
+.env
+*.key
+*.pfx
+PublishedFileId.txt.bak
+
+# Separate profile used for screenshot scenes
+.sceneprofile/
+.modsprofile2/

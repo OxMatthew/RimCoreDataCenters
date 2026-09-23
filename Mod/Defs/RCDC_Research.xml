@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    THE DATA CENTER RESEARCH TREE
+
+      Data Center Infrastructure (root: unlocks the five buildings and the base research uplink)
+        Optimized Firmware ....... needs the root
+        Immersion Cooling ........ needs the root
+        Predictive Maintenance ... needs the root
+        Network Fabric ........... needs the root
+        Redundant Power .......... needs the root
+        Distributed Computing .... needs Optimized Firmware + Network Fabric
+        Autonomous Operations .... needs Predictive Maintenance + Distributed Computing
+        Access Control ........... needs the root (unlocks the biometric door)
+        Threat Screening ......... needs Access Control (unlocks the metal detector gate)
+        Secure Certification ..... needs Threat Screening (cartridge price premium)
+
+    Every number lives in the UpgradeEffects block of the project, so the tree can be rebalanced here
+    without touching code. Multipliers multiply together, additive values add together.
+    Costs are comparable to vanilla mid-game projects (Fabrication 4000, Multi-analyzer 4000).
+  -->
+
+  <ResearchProjectDef>
+    <defName>RCDC_DataCenterInfrastructure</defName>
+    <label>data center infrastructure</label>
+    <description>Design and operate racks of networked servers: rack-mounted compute, network cores, precision cooling and battery-backed power. Unlocks the Data Center architect tab.\n\nAlso links your researchers to the data center's spare compute: every rack that is up and running adds +4% research speed to all colonists, up to +20%.</description>
+    <baseCost>3500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+      <li>AirConditioning</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>2.90</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <researchBonusPerRack>0.04</researchBonusPerRack>
+        <researchBonusCap>0.20</researchBonusCap>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <!-- ============================ Performance ============================ -->
+
+  <ResearchProjectDef>
+    <defName>RCDC_OptimizedFirmware</defName>
+    <label>optimized firmware</label>
+    <description>Rewritten rack firmware and a tuned storage pipeline. Every server rack compiles data cartridges 15% faster, at no extra power or heat.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <outputMultiplier>1.15</outputMultiplier>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_ImmersionCooling</defName>
+    <label>immersion cooling</label>
+    <description>Liquid-cooled blades. Racks give off 30% less waste heat, and their throttle, shutdown and restart temperatures are all 4 C higher, so one cooling unit carries a bigger room.</description>
+    <baseCost>2200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <heatMultiplier>0.7</heatMultiplier>
+        <temperatureTolerance>4</temperatureTolerance>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_PredictiveMaintenance</defName>
+    <label>predictive maintenance</label>
+    <description>Sensors and failure prediction schedule repairs before parts fail. Server racks wear 35% more slowly, so they need servicing far less often.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>11.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <wearRateMultiplier>0.65</wearRateMultiplier>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_NetworkFabric</defName>
+    <label>network fabric</label>
+    <description>A faster switching fabric. Every network core serves 4 more server racks (10 in total) and reaches 4 cells further.</description>
+    <baseCost>2200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>14.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <extraRacksPerCore>4</extraRacksPerCore>
+        <extraCoreRange>4</extraCoreRange>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_RedundantPower</defName>
+    <label>redundant power</label>
+    <description>Better cells and smarter charging for the UPS unit: it stores twice as much energy and wastes less (85% efficiency instead of 70%).</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>15.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <upsCapacityMultiplier>2</upsCapacityMultiplier>
+        <upsEfficiencyBonus>0.15</upsEfficiencyBonus>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <!-- ============================ Advanced ============================ -->
+
+  <ResearchProjectDef>
+    <defName>RCDC_DistributedComputing</defName>
+    <label>distributed computing</label>
+    <description>Pool the whole data center's compute into a research cluster. The research uplink grows to +7% research speed per running rack, up to +45% in total.</description>
+    <baseCost>4200</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_OptimizedFirmware</li>
+      <li>RCDC_NetworkFabric</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>13.00</researchViewX>
+    <researchViewY>5.55</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <researchBonusPerRack>0.03</researchBonusPerRack>
+        <researchBonusCap>0.25</researchBonusCap>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_AutonomousOperations</defName>
+    <label>autonomous operations</label>
+    <description>Self-managing racks. A rack with no operations console coverage now runs at 90% output instead of 65%, and its extra wear penalty drops from 35% to 10%. Consoles still give the full benefit.</description>
+    <baseCost>5000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>RCDC_PredictiveMaintenance</li>
+      <li>RCDC_DistributedComputing</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>12.00</researchViewX>
+    <researchViewY>6.35</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <unmonitoredOutputBonus>0.25</unmonitoredOutputBonus>
+        <unmonitoredWearReduction>0.25</unmonitoredWearReduction>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <!-- ============================ Security ============================ -->
+
+  <ResearchProjectDef>
+    <defName>RCDC_AccessControl</defName>
+    <label>access control</label>
+    <description>Badge and face recognition for doors. Unlocks the biometric access door: a powered door with a facial scanner that only lets colony members through. Visitors, guests and prisoners are turned away.</description>
+    <baseCost>1500</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_ThreatScreening</defName>
+    <label>threat screening</label>
+    <description>Walk-through weapon detection. Unlocks the metal detector gate: colony members pass freely, unarmed visitors are let through, and anyone carrying a weapon is turned away and reported.</description>
+    <baseCost>2000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_AccessControl</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>5.55</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>RCDC_SecureCertification</defName>
+    <label>secure certification</label>
+    <description>An audited chain of custody for your data. While the colony has a working biometric access door and a working metal detector gate, data cartridges sell for 20% more.</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_ThreatScreening</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <researchViewX>16.00</researchViewX>
+    <researchViewY>6.35</researchViewY>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.UpgradeEffects">
+        <certifiedPriceBonus>0.20</certifiedPriceBonus>
+      </li>
+    </modExtensions>
+  </ResearchProjectDef>
+
+  <!-- ============================ Data classification ============================ -->
+
+  <!-- No UpgradeEffects: this project only unlocks the three specialized cartridges (Defs/RCDC_Items.xml)
+       and the rack Specialization command, via researchPrerequisites on the item defs themselves. -->
+  <ResearchProjectDef>
+    <defName>RCDC_DataClassification</defName>
+    <label>data classification</label>
+    <description>Sort compiled data by kind instead of producing one generic cartridge. Unlocks the Specialization command on every server rack, letting you choose between research, financial and medical data cartridges: financial data is worth the most to traders, research data lends a little extra compute to your own researchers when stockpiled, and medical data helps your colony's doctors fight disease when stockpiled.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>RCDC_DataCenterInfrastructure</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <researchViewX>17.00</researchViewX>
+    <researchViewY>4.75</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

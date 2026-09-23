@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    Espionage: a small "smash and grab" raid themed around stealing data, built entirely from vanilla raid
+    machinery (see Source/RimCoreDataCenters/Threats/IncidentWorker_Espionage.cs). Only ever fires on a map
+    that already has a spawned server rack. category ThreatSmall keeps it a lesser, more frequent nuisance
+    than a full ThreatBig raid; baseChance and minRefireDays are deliberately modest.
+  -->
+  <IncidentDef>
+    <defName>RCDC_Espionage</defName>
+    <label>data center espionage</label>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>RimCore.DataCenters.IncidentWorker_Espionage</workerClass>
+    <baseChance>1.2</baseChance>
+    <minRefireDays>5</minRefireDays>
+    <category>ThreatSmall</category>
+    <pointsScaleable>true</pointsScaleable>
+    <tale>Raid</tale>
+  </IncidentDef>
+
+  <LetterDef>
+    <defName>RCDC_EspionageLetter</defName>
+    <color>(1,0.55,0.3)</color>
+    <flashColor>(1,0.55,0.3)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>RCDC_EspionageAlert</arriveSound>
+  </LetterDef>
+
+  <!--
+    Sharp two-tone klaxon, distinct from the access-denied buzz, so an espionage raid reads differently.
+    onCamera: incident letters play their arriveSound immediately, on camera (not tied to a map position, so
+    it is heard right away wherever the player is looking), which needs a subSound marked for that.
+  -->
+  <SoundDef>
+    <defName>RCDC_EspionageAlert</defName>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>RCDC/EspionageAlert</clipPath>
+          </li>
+        </grains>
+        <volumeRange>16~16</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

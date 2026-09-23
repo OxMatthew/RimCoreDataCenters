@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>RimCore Data Centers</name>
+  <author>RimCore</author>
+  <packageId>RimCore.DataCenters</packageId>
+  <modVersion>0.5.0</modVersion>
+  <supportedVersions>
+    <li>1.5</li>
+    <li>1.6</li>
+  </supportedVersions>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+  </loadAfter>
+  <description>Build and run a data center. Research Data Center Infrastructure, then construct a server room: networked server racks, a network core, precision cooling, UPS units and an operations console. Keep it powered, cool and maintained, and it produces data cartridges that traders buy. Then research your way up an upgrade tree, lock the room down with biometric doors and metal detectors, and put the spare compute to work speeding up your colony's research.
+
+FEATURES
+- Server racks produce Data Cartridges while powered, network-linked and cool. Status is always clear: Operational, No Power, No Network, Too Hot, Maintenance Required or Output Full.
+- Network Cores link nearby racks (limited capacity). Select one to see its range and links.
+- Precision Cooling Units pull a room toward a target temperature (uses the vanilla temperature system).
+- Compact UPS units ride through short power outages.
+- Operations Console: colonists run a recurring Data Center Operations shift. Intellectual and Construction skills speed the work.
+- Racks wear over time. Colonists service them using a component. Neglected racks lose output and eventually stop; they never explode.
+- Heat throttles output and triggers a safe emergency shutdown. No unfair fires.
+- New "Data center" work type, alerts, messages, sounds and status lights.
+
+NEW IN 0.2: UPGRADE TREE, RESEARCH UPLINK, SECURITY
+- Nine follow-up research projects: Optimized Firmware (+15% output), Immersion Cooling (30% less heat, +4 C tolerance), Predictive Maintenance (35% slower wear), Network Fabric (10 racks per core, longer reach), Redundant Power (UPS holds twice the energy), Distributed Computing and Autonomous Operations.
+- Research uplink: every running rack adds research speed for all your colonists (+4% each, up to +20%; Distributed Computing raises it to +7% each, up to +45%).
+- Biometric access door: a powered facial-scanner door that only colony members can open. Visitors, guests and prisoners are turned away.
+- Metal detector gate: colony members and unarmed visitors pass, anyone carrying a weapon is turned away and reported.
+- Access-denied alert, log and sound. Without power a scanner fails secure and admits colony members only.
+- Secure Certification: with a working biometric door and metal detector gate, data cartridges sell for 20% more.
+
+NEW IN 0.3: THE AI CORE ("MERIDIAN")
+- Research Cognitive Computing, then build an AI core. It monitors the whole data center by itself (no operations shifts needed), forecasts when each rack will need service, and writes a status report on request.
+- It has a personality and a rapport with you that rises when the data center is run well and falls when it is neglected. Its benefits scale with that rapport.
+- Give it a directive: Balanced, Efficiency (faster but hotter and more power), Stewardship (slower wear, hotter limits) or Curiosity (bigger research uplink). Each one trades something for something else.
+- Every week or two it sends a letter with a small choice: lend compute to research, run an overclock window, or run a maintenance window.
+- Small, harmless risks only: a reboot, a day of sulking, or losing one rack's cartridge progress. Nothing hostile. Security certification halves how often they happen.
+- It is a simulated character: no network access, no language model, every line is a translatable string.
+
+NEW IN 0.4: DATA SPECIALIZATION AND ESPIONAGE
+- Research Data Classification, then use the Specialization command on any rack to choose what it produces: standard, research, financial or medical data.
+- Financial Data Cartridges are worth the most to traders (110 instead of 80). Research and Medical Data Cartridges are worth the same, but a stockpile of them gives a small bonus (extra research speed, or faster immunity gain) while they sit in storage.
+- A new small-scale "espionage" raid: an occasional smash-and-grab team that tries to loot valuable cartridges and flee rather than fight to the end. Built from the game's own raid system, so it behaves like any other raid - a locked security door stops them like any obstacle. Security certification also makes it rarer.
+- A distinct alarm sound and letter for the espionage raid.
+
+NEW IN 0.5: DATA CONTRACTS
+- A buyer occasionally offers a timed contract: deliver a set number of a given cartridge type within a deadline for a silver bonus over market value.
+- Accept, decline, or let it lapse - nothing is ever taken from you for saying no. Only one offer or active contract at a time.
+- Deliver enough before the deadline and the silver bonus arrives near your trade spot; miss it and the contract simply expires, no penalty.
+- Requires at least one running server rack; once Data Classification is researched, contracts can also ask for the specialized cartridge types.
+
+REQUIREMENTS
+RimWorld 1.5 or 1.6. No DLC and no other mods required. Safe to add to an existing save (0.1.0-0.3.0 saves load unchanged). Removing the mod from a save that contains its buildings is not supported.
+
+After research, enable the new "Data center" work type for colonists in the Work tab (new work types start disabled in existing saves).
+
+Every important balance number is an XML value that can be tuned in Defs/RCDC_Buildings.xml, Defs/RCDC_Items.xml, Defs/RCDC_Research.xml and Defs/RCDC_Security.xml. Open source under the MIT license.</description>
+</ModMetaData>

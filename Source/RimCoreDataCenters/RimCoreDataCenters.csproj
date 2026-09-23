@@ -1,0 +1,74 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Builds Mod\$(RwVersion)\Assemblies\RimCoreDataCenters.dll against whatever RimWorld managed
+    assemblies are found at RimWorldDir (default: the default Steam install path). Both 1.5 and 1.6
+    run on Unity's Mono with the .NET Framework 4.7.2 profile, so we target net472 either way.
+    Pass /p:RwVersion=1.6 while a RimWorld 1.6 install is at RimWorldDir to build the 1.6 assembly
+    (defines RIMWORLD_1_6 for the version-gated #if blocks); omit it (or pass 1.5) while a 1.5
+    install is at RimWorldDir. The two versions cannot be built in the same invocation because only
+    one game version can be installed at RimWorldDir at a time - see docs/BUILD.md.
+    Point RimWorldDir at your install with the RIMWORLD_DIR environment variable or
+    /p:RimWorldDir="..." (see docs/BUILD.md). No NuGet packages other than Microsoft's
+    reference-assembly pack are used, and nothing from the game is redistributed.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>RimCoreDataCenters</AssemblyName>
+    <RootNamespace>RimCore.DataCenters</RootNamespace>
+    <Version>0.1.0</Version>
+    <Authors>RimCore</Authors>
+    <Product>RimCore Data Centers</Product>
+    <Copyright>Copyright (c) 2026 RimCore. MIT License.</Copyright>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=Source</PathMap>
+    <Optimize>true</Optimize>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RwVersion Condition="'$(RwVersion)' == ''">1.5</RwVersion>
+    <OutputPath>$(MSBuildProjectDirectory)\..\..\Mod\$(RwVersion)\Assemblies\</OutputPath>
+    <DefineConstants Condition="'$(RwVersion)' == '1.6'">$(DefineConstants);RIMWORLD_1_6</DefineConstants>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RimWorldDir Condition="'$(RimWorldDir)' == '' And '$(RIMWORLD_DIR)' != ''">$(RIMWORLD_DIR)</RimWorldDir>
+    <RimWorldDir Condition="'$(RimWorldDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\RimWorld</RimWorldDir>
+    <ManagedDir>$(RimWorldDir)\RimWorldWin64_Data\Managed</ManagedDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net472" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ManagedDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(ManagedDir)\UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(ManagedDir)\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(ManagedDir)\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

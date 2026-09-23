@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!--
+    Attach the data center's two stat parts to vanilla stats. No code patching: StatDef.parts is plain XML.
+    Each operation checks whether the stat already has a <parts> list (another mod may have added one) and
+    adds to it, or creates it.
+  -->
+
+  <!-- Research uplink: research speed +X% per running rack. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/StatDef[defName="ResearchSpeed"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="ResearchSpeed"]/parts</xpath>
+      <value>
+        <li Class="RimCore.DataCenters.StatPart_DataCenterResearch"/>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="ResearchSpeed"]</xpath>
+      <value>
+        <parts>
+          <li Class="RimCore.DataCenters.StatPart_DataCenterResearch"/>
+        </parts>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Medical archive: immunity gain speed +X% while Medical Data Cartridges are stockpiled. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/StatDef[defName="ImmunityGainSpeed"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="ImmunityGainSpeed"]/parts</xpath>
+      <value>
+        <li Class="RimCore.DataCenters.StatPart_DataCenterMedical"/>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="ImmunityGainSpeed"]</xpath>
+      <value>
+        <parts>
+          <li Class="RimCore.DataCenters.StatPart_DataCenterMedical"/>
+        </parts>
+      </value>
+    </nomatch>
+  </Operation>
+
+  <!-- Secure certification: data cartridges sell for more while the data center is certified. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/StatDef[defName="MarketValue"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="MarketValue"]/parts</xpath>
+      <value>
+        <li Class="RimCore.DataCenters.StatPart_CertifiedData"/>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/StatDef[defName="MarketValue"]</xpath>
+      <value>
+        <parts>
+          <li Class="RimCore.DataCenters.StatPart_CertifiedData"/>
+        </parts>
+      </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

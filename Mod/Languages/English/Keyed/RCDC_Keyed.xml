@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ================= Server rack: status and inspect text ================= -->
+  <RCDC_RackStatus>Status</RCDC_RackStatus>
+  <RCDC_Status_Operational>Operational</RCDC_Status_Operational>
+  <RCDC_Status_NoPower>No Power</RCDC_Status_NoPower>
+  <RCDC_Status_NoNetwork>No Network</RCDC_Status_NoNetwork>
+  <RCDC_Status_TooHot>Too Hot</RCDC_Status_TooHot>
+  <RCDC_Status_MaintenanceRequired>Maintenance Required</RCDC_Status_MaintenanceRequired>
+  <RCDC_Status_OutputFull>Output Full</RCDC_Status_OutputFull>
+
+  <RCDC_DetailNoPower>the power grid cannot supply it</RCDC_DetailNoPower>
+  <RCDC_DetailSwitchedOff>switched off</RCDC_DetailSwitchedOff>
+  <RCDC_DetailNet_None>linked</RCDC_DetailNet_None>
+  <RCDC_DetailNet_NoCoreInRange>no network core in range</RCDC_DetailNet_NoCoreInRange>
+  <RCDC_DetailNet_CoreFull>every network core in range is at capacity</RCDC_DetailNet_CoreFull>
+  <RCDC_DetailNet_CoreOffline>the network core has no power</RCDC_DetailNet_CoreOffline>
+  <RCDC_DetailShutdown>emergency shutdown, restarts below {0}</RCDC_DetailShutdown>
+  <RCDC_DetailThrottled>throttled to {0}% by heat</RCDC_DetailThrottled>
+  <RCDC_DetailHalted>halted until serviced</RCDC_DetailHalted>
+  <RCDC_DetailDegraded>losing efficiency, needs servicing</RCDC_DetailDegraded>
+  <RCDC_DetailOutputFull>clear the cartridges in front of the rack</RCDC_DetailOutputFull>
+
+  <RCDC_RackNetwork>Network: linked ({0}/{1} on core)</RCDC_RackNetwork>
+  <RCDC_RackEfficiency>Efficiency: {0}% (heat {1}%, maintenance {2}%, monitoring {3}%)</RCDC_RackEfficiency>
+  <RCDC_RackTemperature>Temperature: {0} (throttles above {1})</RCDC_RackTemperature>
+  <RCDC_RackWear>Wear: {0}% (service at {1}%)</RCDC_RackWear>
+  <RCDC_RackProgress>Next cartridge: {0}%</RCDC_RackProgress>
+
+  <!-- ================= Messages ================= -->
+  <RCDC_MsgShutdown>{0} performed an emergency shutdown: the room reached {1}. Cool the room to bring it back.</RCDC_MsgShutdown>
+  <RCDC_MsgRestart>{0} has cooled down and restarted.</RCDC_MsgRestart>
+  <RCDC_MsgServiceDue>{0} is {1}% worn and needs servicing. It is losing efficiency.</RCDC_MsgServiceDue>
+  <RCDC_MsgHalted>{0} has stopped: it is fully worn and needs servicing.</RCDC_MsgHalted>
+  <RCDC_MsgServiced>{0} serviced {1}. Wear reset.</RCDC_MsgServiced>
+  <RCDC_MsgShiftComplete>{0} finished a data center operations shift: {1} racks reviewed, monitoring covers the next {2} days.</RCDC_MsgShiftComplete>
+
+  <!-- ================= Network core / console ================= -->
+  <RCDC_NetworkStatus>Network</RCDC_NetworkStatus>
+  <RCDC_NetworkOnline>online</RCDC_NetworkOnline>
+  <RCDC_NetworkOffline>offline (no power)</RCDC_NetworkOffline>
+  <RCDC_ConnectedRacks>Connected racks: {0} / {1}</RCDC_ConnectedRacks>
+  <RCDC_NetworkAtCapacity>full - build another core for more racks</RCDC_NetworkAtCapacity>
+  <RCDC_ConnectedConsoles>Operations consoles: {0}</RCDC_ConnectedConsoles>
+  <RCDC_Monitored>monitored</RCDC_Monitored>
+  <RCDC_Unmonitored>unmonitored - racks run at reduced output</RCDC_Unmonitored>
+  <RCDC_UnmonitoredShort>unmonitored</RCDC_UnmonitoredShort>
+
+  <RCDC_ConsoleStatus>Console</RCDC_ConsoleStatus>
+  <RCDC_ConsoleReady>ready</RCDC_ConsoleReady>
+  <RCDC_ConsoleNetwork>Linked to a network core with {0} / {1} racks</RCDC_ConsoleNetwork>
+  <RCDC_ConsoleCoverage>Monitoring coverage: {0} days remaining</RCDC_ConsoleCoverage>
+  <RCDC_ConsoleNoCoverage>Monitoring coverage: none - a colonist needs to run an operations shift (Data center work)</RCDC_ConsoleNoCoverage>
+
+  <RCDC_ReasonNotSpawned>not in the world</RCDC_ReasonNotSpawned>
+  <RCDC_ReasonNoPower>no power</RCDC_ReasonNoPower>
+  <RCDC_ReasonNoNetwork>no network core in range</RCDC_ReasonNoNetwork>
+  <RCDC_ReasonCoreOffline>the network core has no power</RCDC_ReasonCoreOffline>
+  <RCDC_ReasonNoRacks>no server racks are linked to the core</RCDC_ReasonNoRacks>
+  <RCDC_ReasonNoShiftNeeded>the network is already monitored</RCDC_ReasonNoShiftNeeded>
+  <RCDC_ReasonNoServiceParts>need {1} {0} to service the rack</RCDC_ReasonNoServiceParts>
+
+  <!-- ================= UPS ================= -->
+  <RCDC_UpsRuntime>Estimated runtime at current load: {0} hours</RCDC_UpsRuntime>
+  <RCDC_UpsCharging>Charging</RCDC_UpsCharging>
+  <RCDC_UpsFull>Fully charged</RCDC_UpsFull>
+  <RCDC_UpsIdle>Standing by</RCDC_UpsIdle>
+
+  <!-- ================= Alerts ================= -->
+  <RCDC_AlertOverheating>Data center overheating</RCDC_AlertOverheating>
+  <RCDC_AlertOverheatingDesc>Server racks are throttled or shut down because their room is too hot. Add cooling, reduce the number of racks, or improve airflow. Racks restart on their own once the room cools.\n\n{0}</RCDC_AlertOverheatingDesc>
+  <RCDC_AlertMaintenance>Server racks need servicing</RCDC_AlertMaintenance>
+  <RCDC_AlertMaintenanceDesc>Server racks have worn down. Worn racks lose output and eventually stop. Assign a colonist to Data center work and keep a few components in storage.\n\n{0}</RCDC_AlertMaintenanceDesc>
+  <RCDC_AlertOffline>Data center offline</RCDC_AlertOffline>
+  <RCDC_AlertOfflineDesc>Server racks are not running because they have no power or no network core link. Check the power grid and that every rack is within range of a powered network core with a free slot.\n\n{0}</RCDC_AlertOfflineDesc>
+
+  <!-- ================= Info-card stats ================= -->
+  <RCDC_StatOutput>Output</RCDC_StatOutput>
+  <RCDC_StatOutputDesc>How fast the rack produces cartridges at full efficiency. Heat, wear and missing monitoring all reduce this.</RCDC_StatOutputDesc>
+  <RCDC_PerDayValue>{0} {1} per day</RCDC_PerDayValue>
+  <RCDC_StatHeat>Waste heat</RCDC_StatHeat>
+  <RCDC_StatHeatDesc>Heat pushed into the room while running. For comparison, a vanilla heater produces 21 per second.</RCDC_StatHeatDesc>
+  <RCDC_HeatValue>{0} per second</RCDC_HeatValue>
+  <RCDC_StatSafeTemp>Full-speed temperature</RCDC_StatSafeTemp>
+  <RCDC_StatSafeTempDesc>The rack runs at full speed up to {0}, slows down above that, and performs an emergency shutdown at {1}. After a shutdown it restarts once the air is below {2}.</RCDC_StatSafeTempDesc>
+  <RCDC_StatServiceInterval>Service interval</RCDC_StatServiceInterval>
+  <RCDC_StatServiceIntervalDesc>Racks ask for servicing after about {0} days of continuous running. If neglected they lose efficiency and stop completely after about {1} days.</RCDC_StatServiceIntervalDesc>
+  <RCDC_StatRackCapacity>Rack capacity</RCDC_StatRackCapacity>
+  <RCDC_StatRackCapacityDesc>The maximum number of server racks this network core can serve.</RCDC_StatRackCapacityDesc>
+  <RCDC_StatNetworkRange>Network range</RCDC_StatNetworkRange>
+  <RCDC_StatNetworkRangeDesc>Racks and consoles must be within this many cells of the core to link to it.</RCDC_StatNetworkRangeDesc>
+  <RCDC_StatShiftLength>Operations shift length</RCDC_StatShiftLength>
+  <RCDC_StatShiftLengthDesc>Work needed for one shift at average skill. Skilled colonists (Intellectual first, Construction second) finish faster.</RCDC_StatShiftLengthDesc>
+  <RCDC_StatCoverage>Monitoring coverage per shift</RCDC_StatCoverage>
+  <RCDC_StatCoverageDesc>How long one completed shift keeps the linked racks monitored. Unmonitored racks lose output and wear faster.</RCDC_StatCoverageDesc>
+  <RCDC_CellsValue>{0} cells</RCDC_CellsValue>
+  <RCDC_HoursValue>{0} hours</RCDC_HoursValue>
+  <RCDC_DaysValue>{0} days</RCDC_DaysValue>
+
+  <!-- ================= Upgrade research: rack inspect line and console lines ================= -->
+  <RCDC_RackUpgrades>Upgrades: {0}</RCDC_RackUpgrades>
+  <RCDC_UpFragOutput>output x{0}</RCDC_UpFragOutput>
+  <RCDC_UpFragHeat>heat x{0}</RCDC_UpFragHeat>
+  <RCDC_UpFragTolerance>+{0} C tolerance</RCDC_UpFragTolerance>
+  <RCDC_UpFragWear>wear x{0}</RCDC_UpFragWear>
+  <RCDC_UpFragAutonomy>autonomous</RCDC_UpFragAutonomy>
+  <RCDC_ConsoleResearchGrid>Research uplink: +{0}% research speed for all colonists (max +{1}%)</RCDC_ConsoleResearchGrid>
+  <RCDC_ConsoleCertified>Data security: certified (cartridges sell for +{0}%)</RCDC_ConsoleCertified>
+  <RCDC_ConsoleNotCertified>Data security: not certified - needs a working biometric door and metal detector gate</RCDC_ConsoleNotCertified>
+  <RCDC_StatResearchGrid>Data center research uplink</RCDC_StatResearchGrid>
+  <RCDC_StatCertified>Security-certified data</RCDC_StatCertified>
+
+  <!-- ================= Security doors ================= -->
+  <RCDC_AccessRuleBiometric>Access: colony members only (facial scan)</RCDC_AccessRuleBiometric>
+  <RCDC_AccessRuleDetector>Access: colony members, and visitors carrying no weapon (metal detector)</RCDC_AccessRuleDetector>
+  <RCDC_ScannerOnline>Scanner: online</RCDC_ScannerOnline>
+  <RCDC_ScannerOffline>Scanner: no power - colony members only</RCDC_ScannerOffline>
+  <RCDC_AccessBlocked>Turned away: {0} times (last: {1}, {2})</RCDC_AccessBlocked>
+  <RCDC_DenyNotStaff>not on the colony's staff list</RCDC_DenyNotStaff>
+  <RCDC_DenyOffline>scanner offline</RCDC_DenyOffline>
+  <RCDC_DenyArmed>carrying {0}</RCDC_DenyArmed>
+  <RCDC_MsgAccessDenied>{0} turned {1} away: {2}.</RCDC_MsgAccessDenied>
+  <RCDC_AlertAccess>Access denied</RCDC_AlertAccess>
+  <RCDC_AlertAccessDesc>A security door recently turned someone away. Visitors and guests are not allowed into areas behind a biometric door, and armed visitors are refused at a metal detector gate.\n\n{0}</RCDC_AlertAccessDesc>
+
+  <!-- ================= Cartridge specialization ================= -->
+  <RCDC_RackProducing>Producing: {0}</RCDC_RackProducing>
+  <RCDC_SpecializationGizmo>Specialization</RCDC_SpecializationGizmo>
+  <RCDC_SpecializationGizmoDesc>Choose which data type this rack produces next. Currently: {0}. Switching keeps the rack's progress toward its next cartridge.</RCDC_SpecializationGizmoDesc>
+  <RCDC_SpecializationCurrent>current</RCDC_SpecializationCurrent>
+  <RCDC_SpecializationLocked>needs research</RCDC_SpecializationLocked>
+  <RCDC_MsgSpecialization>{0} switched to producing {1}.</RCDC_MsgSpecialization>
+  <RCDC_StatMedicalArchive>Medical data archive</RCDC_StatMedicalArchive>
+
+  <!-- ================= Espionage ================= -->
+  <RCDC_EspionageLetterLabel>Data center espionage</RCDC_EspionageLetterLabel>
+  <RCDC_EspionageLetterText>Sensors report {0} operatives converging on your data center: {1} of them, moving fast. They are not here to talk - they want to grab whatever cartridges and valuables they can carry and leave.\n\nThey will loot what they can reach and try to flee rather than fight to the end. A locked security door will slow them down like any other obstacle, but they will break through one if it is the only way in.</RCDC_EspionageLetterText>
+
+  <!-- ================= Data contracts ================= -->
+  <RCDC_Contract_OfferLabel>Data contract offer</RCDC_Contract_OfferLabel>
+  <RCDC_Contract_OfferText>A buyer wants {0} {1}, delivered soon, and is offering {2} over the going rate for them.\n\nAccept and you have until the deadline to have that many on hand. Nothing is taken from you now, and nothing is lost if you decline or let the offer lapse.</RCDC_Contract_OfferText>
+  <RCDC_Contract_Accept>Accept the contract</RCDC_Contract_Accept>
+  <RCDC_Contract_Decline>Decline</RCDC_Contract_Decline>
+  <RCDC_Contract_Later>Decide later</RCDC_Contract_Later>
+  <RCDC_Contract_AcceptedMessage>Data contract accepted: {0} {1} by the deadline.</RCDC_Contract_AcceptedMessage>
+  <RCDC_Contract_FulfilledLabel>Data contract fulfilled</RCDC_Contract_FulfilledLabel>
+  <RCDC_Contract_FulfilledText>The buyer took delivery of {0} {1} and paid out {2} silver, dropped near your trade spot.</RCDC_Contract_FulfilledText>
+  <RCDC_Contract_ExpiredLabel>Data contract missed</RCDC_Contract_ExpiredLabel>
+  <RCDC_Contract_ExpiredText>The deadline for {0} {1} has passed. You had {2} on hand. The buyer has moved on - nothing was taken, and nothing else is lost.</RCDC_Contract_ExpiredText>
+
+</LanguageData>

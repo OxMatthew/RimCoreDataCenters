@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    BALANCE: market value 80 silver, stack 25, mass 0.08 kg. Sellable only (traders buy but never stock it).
+    Traders pay a fraction of market value like any other good, so one cartridge nets roughly 55 silver.
+
+    Once Data Classification is researched, a rack's Specialization command can switch it to one of the three
+    variants below instead. Switching keeps the rack's progress toward its next cartridge; only the type of the
+    NEXT cartridge changes. See docs/BALANCE.md for the numbers and the reasoning.
+  -->
+  <ThingDef ParentName="ResourceBase" Name="RCDC_DataCartridgeBase" Abstract="True">
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Standard_Drop</soundDrop>
+    <stackLimit>25</stackLimit>
+    <healthAffectsPrice>false</healthAffectsPrice>
+    <tradeability>Sellable</tradeability>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <MarketValue>80</MarketValue>
+      <Mass>0.08</Mass>
+      <Flammability>0.4</Flammability>
+      <DeteriorationRate>1</DeteriorationRate>
+    </statBases>
+    <thingCategories>
+      <li>RCDC_DataMedia</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="RCDC_DataCartridgeBase">
+    <defName>RCDC_DataCartridge</defName>
+    <label>data cartridge</label>
+    <description>A hardened storage cartridge holding compiled datasets from a server rack. Traders and settlements buy these for research, archiving and analytics. Every rack produces this by default.</description>
+    <graphicData>
+      <texPath>RCDC/Things/Item/DataCartridge</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="RCDC_DataCartridgeBase">
+    <defName>RCDC_DataCartridge_Research</defName>
+    <label>research data cartridge</label>
+    <description>A cartridge specialized for research datasets: citation graphs, simulation results, experiment logs. Worth the same as a standard cartridge, but a stockpile of them lends your researchers a little extra compute - sell them for silver or hold onto some for the research boost.</description>
+    <graphicData>
+      <texPath>RCDC/Things/Item/DataCartridgeResearch</texPath>
+    </graphicData>
+    <researchPrerequisites>
+      <li>RCDC_DataClassification</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.CartridgeSpecialEffect">
+        <researchBonusPerStored>0.004</researchBonusPerStored>
+        <researchBonusCapStored>0.08</researchBonusCapStored>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="RCDC_DataCartridgeBase">
+    <defName>RCDC_DataCartridge_Financial</defName>
+    <label>financial data cartridge</label>
+    <description>A cartridge specialized for financial datasets: ledgers, market feeds, transaction histories. Traders pay well above the going rate for good financial data - it is the most valuable thing your data center can make, and the thing raiders want most if they break in.</description>
+    <graphicData>
+      <texPath>RCDC/Things/Item/DataCartridgeFinancial</texPath>
+    </graphicData>
+    <researchPrerequisites>
+      <li>RCDC_DataClassification</li>
+    </researchPrerequisites>
+    <statBases>
+      <MarketValue>110</MarketValue>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="RCDC_DataCartridgeBase">
+    <defName>RCDC_DataCartridge_Medical</defName>
+    <label>medical data cartridge</label>
+    <description>A cartridge specialized for medical datasets: case histories, treatment outcomes, pathogen models. Worth the same as a standard cartridge, but a stockpile of them helps your colony's own doctors fight disease faster - sell them for silver or hold onto some for the health benefit.</description>
+    <graphicData>
+      <texPath>RCDC/Things/Item/DataCartridgeMedical</texPath>
+    </graphicData>
+    <researchPrerequisites>
+      <li>RCDC_DataClassification</li>
+    </researchPrerequisites>
+    <modExtensions>
+      <li Class="RimCore.DataCenters.CartridgeSpecialEffect">
+        <immunityBonusPerStored>0.01</immunityBonusPerStored>
+        <immunityBonusCapStored>0.15</immunityBonusCapStored>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

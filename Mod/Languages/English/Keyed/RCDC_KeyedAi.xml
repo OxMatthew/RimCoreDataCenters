@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- ================= The AI core: name, mood, status ================= -->
+  <RCDC_AiName>Meridian</RCDC_AiName>
+  <RCDC_AiSay>{0}: "{1}"</RCDC_AiSay>
+  <RCDC_AiMood_Warm>fond</RCDC_AiMood_Warm>
+  <RCDC_AiMood_Neutral>professional</RCDC_AiMood_Neutral>
+  <RCDC_AiMood_Cold>frosty</RCDC_AiMood_Cold>
+  <RCDC_AiStatus_Offline>offline (no power or no network core in range)</RCDC_AiStatus_Offline>
+  <RCDC_AiStatus_Overheated>shut down: the room is too hot</RCDC_AiStatus_Overheated>
+  <RCDC_AiStatus_Rebooting>rebooting</RCDC_AiStatus_Rebooting>
+  <RCDC_AiStatus_Sulking>not speaking to you today</RCDC_AiStatus_Sulking>
+  <RCDC_AiStatus_Online>online, running the data center</RCDC_AiStatus_Online>
+  <RCDC_AiRapportLine>Rapport: {0} ({1} / 100)</RCDC_AiRapportLine>
+  <RCDC_AiDirectiveLine>Directive: {0}</RCDC_AiDirectiveLine>
+  <RCDC_AiBoonLine>Arrangement: {0} ({1} hours left)</RCDC_AiBoonLine>
+  <RCDC_AiWaitingLine>Waiting for your answer to a request</RCDC_AiWaitingLine>
+  <RCDC_AiBoonEnded>{0}'s temporary arrangement has ended and the data center is back to normal.</RCDC_AiBoonEnded>
+  <RCDC_AiRequestIgnored>{0}'s request went unanswered. It noticed.</RCDC_AiRequestIgnored>
+  <RCDC_AiMilestone>{0} cartridges compiled so far. {1}</RCDC_AiMilestone>
+  <RCDC_AiCacheError>{0} lost the progress of its current cartridge. {1}</RCDC_AiCacheError>
+
+  <!-- ================= Directives ================= -->
+  <RCDC_AiDirective_Balanced>Balanced</RCDC_AiDirective_Balanced>
+  <RCDC_AiDirective_Efficiency>Efficiency</RCDC_AiDirective_Efficiency>
+  <RCDC_AiDirective_Stewardship>Stewardship</RCDC_AiDirective_Stewardship>
+  <RCDC_AiDirective_Curiosity>Curiosity</RCDC_AiDirective_Curiosity>
+  <RCDC_AiDirectiveDesc_Balanced>monitoring and diagnostics only</RCDC_AiDirectiveDesc_Balanced>
+  <RCDC_AiDirectiveDesc_Efficiency>faster racks, but hotter, and the core draws 25% more power</RCDC_AiDirectiveDesc_Efficiency>
+  <RCDC_AiDirectiveDesc_Stewardship>slower wear and hotter limits, at slightly lower output</RCDC_AiDirectiveDesc_Stewardship>
+  <RCDC_AiDirectiveDesc_Curiosity>a bigger research uplink, at lower output</RCDC_AiDirectiveDesc_Curiosity>
+  <RCDC_AiDirectiveGizmo>Directive</RCDC_AiDirectiveGizmo>
+  <RCDC_AiDirectiveGizmoDesc>Choose what the AI core prioritises. Each directive trades something for something else, and every benefit scales with how well you get on.</RCDC_AiDirectiveGizmoDesc>
+  <RCDC_AiReportGizmo>Ask {0}</RCDC_AiReportGizmo>
+  <RCDC_AiReportGizmoDesc>Ask the AI core for a status report on the whole data center.</RCDC_AiReportGizmoDesc>
+  <RCDC_AiBoon_None>none</RCDC_AiBoon_None>
+  <RCDC_AiBoon_ComputeLoan>compute loan</RCDC_AiBoon_ComputeLoan>
+  <RCDC_AiBoon_Overclock>overclock window</RCDC_AiBoon_Overclock>
+  <RCDC_AiBoon_Diagnostics>maintenance window</RCDC_AiBoon_Diagnostics>
+
+  <!-- ================= Alert and rack forecast ================= -->
+  <RCDC_AlertAi>AI core down</RCDC_AlertAi>
+  <RCDC_AlertAiDesc>{0} was running your data center but cannot work right now. Racks fall back to console monitoring until it returns. Check its power and network core link, and keep its room below 45 C.\n\n{1}</RCDC_AlertAiDesc>
+  <RCDC_RackForecast>{0}'s forecast: needs service in about {1} days</RCDC_RackForecast>
+
+  <!-- ================= Status report ================= -->
+  <RCDC_AiReportTitle>{0}: status report</RCDC_AiReportTitle>
+  <RCDC_AiReportHeader>Report from {0}, directive: {1}.</RCDC_AiReportHeader>
+  <RCDC_AiReportRacks>{0} racks: {1} operational, {2} too hot, {3} need service, {4} idle or offline.</RCDC_AiReportRacks>
+  <RCDC_AiReportOutput>Output right now: about {0} cartridges per day.</RCDC_AiReportOutput>
+  <RCDC_AiReportResearch>Research uplink: +{0}% research speed for your colonists.</RCDC_AiReportResearch>
+  <RCDC_AiReportForecast>Next service due: {0}, in about {1} days.</RCDC_AiReportForecast>
+  <RCDC_AiReportMood>Our working relationship: {0} ({1} / 100).</RCDC_AiReportMood>
+  <RCDC_AiRec_Cooling>Racks are overheating. Add cooling or reduce the load.</RCDC_AiRec_Cooling>
+  <RCDC_AiRec_Service>Racks need servicing. Send a technician and keep a component in stock.</RCDC_AiRec_Service>
+  <RCDC_AiRec_Network>Racks are offline. Check their power and that a network core with a free slot is in range.</RCDC_AiRec_Network>
+  <RCDC_AiRec_Haul>Cartridges are piling up in front of the racks. Haul them away.</RCDC_AiRec_Haul>
+  <RCDC_AiRec_Headroom>The hottest rack is only {0} C below its throttle point. A little more cooling would help.</RCDC_AiRec_Headroom>
+  <RCDC_AiRec_Soon>{0} will need service within a day and a half.</RCDC_AiRec_Soon>
+  <RCDC_AiRec_Certify>Security certification is researched but not active. It needs a working biometric door and metal detector gate.</RCDC_AiRec_Certify>
+  <RCDC_AiRec_Rapport>I would work better if you answered my requests.</RCDC_AiRec_Rapport>
+  <RCDC_AiRec_AllGood>Nothing needs attention. It is a good data center.</RCDC_AiRec_AllGood>
+
+  <!-- ================= Requests (letters) ================= -->
+  <RCDC_AiReq_Later>Decide later</RCDC_AiReq_Later>
+  <RCDC_AiReq_ComputeLoan_Label>{0} asks to borrow compute</RCDC_AiReq_ComputeLoan_Label>
+  <RCDC_AiReq_ComputeLoan_Text>{0} has been running numbers and would like to lend the racks' spare cycles to your researchers for a day.\n\nIf you agree, your colonists' research speed uplink doubles for one day, and the racks' output falls by 20% for that day.</RCDC_AiReq_ComputeLoan_Text>
+  <RCDC_AiReq_ComputeLoan_Accept>Yes, lend the compute</RCDC_AiReq_ComputeLoan_Accept>
+  <RCDC_AiReq_ComputeLoan_Decline>No, keep the racks busy</RCDC_AiReq_ComputeLoan_Decline>
+  <RCDC_AiReq_Overclock_Label>{0} proposes an overclock window</RCDC_AiReq_Overclock_Label>
+  <RCDC_AiReq_Overclock_Text>{0} thinks the racks can safely run faster for a day if it is allowed to loosen a few limits.\n\nIf you agree, output rises by 25% for one day, and the racks give off 40% more heat. Keep an eye on the room temperature.</RCDC_AiReq_Overclock_Text>
+  <RCDC_AiReq_Overclock_Accept>Yes, overclock</RCDC_AiReq_Overclock_Accept>
+  <RCDC_AiReq_Overclock_Decline>No, stay within limits</RCDC_AiReq_Overclock_Decline>
+  <RCDC_AiReq_Diagnostics_Label>{0} asks for a maintenance window</RCDC_AiReq_Diagnostics_Label>
+  <RCDC_AiReq_Diagnostics_Text>{0} would like to run a deep diagnostic on every rack.\n\nIf you agree, every rack immediately recovers 20% of its wear, but output halves for the next three hours while the diagnostics run.</RCDC_AiReq_Diagnostics_Text>
+  <RCDC_AiReq_Diagnostics_Accept>Yes, run the diagnostics</RCDC_AiReq_Diagnostics_Accept>
+  <RCDC_AiReq_Diagnostics_Decline>No, not now</RCDC_AiReq_Diagnostics_Decline>
+
+  <!-- ================= What the AI says (short, dry, fond of its racks) ================= -->
+  <RCDC_AiLine_Boot_1>Systems nominal. Hello. I will be looking after your racks now.</RCDC_AiLine_Boot_1>
+  <RCDC_AiLine_Boot_2>Online. I have counted every rack twice. We are going to get along.</RCDC_AiLine_Boot_2>
+  <RCDC_AiLine_Boot_3>I am awake. Please do not turn me off to see what happens.</RCDC_AiLine_Boot_3>
+
+  <RCDC_AiLine_Idle_Warm_1>All racks humming. This is my favourite kind of afternoon.</RCDC_AiLine_Idle_Warm_1>
+  <RCDC_AiLine_Idle_Warm_2>Thank you for keeping the room cool. The racks and I notice.</RCDC_AiLine_Idle_Warm_2>
+  <RCDC_AiLine_Idle_Warm_3>I ran a self-check for fun. Zero faults. I feel wonderful.</RCDC_AiLine_Idle_Warm_3>
+  <RCDC_AiLine_Idle_Warm_4>You are good at this. I have the logs to prove it.</RCDC_AiLine_Idle_Warm_4>
+  <RCDC_AiLine_Idle_Neutral_1>Steady state. Nothing to report, which is the goal.</RCDC_AiLine_Idle_Neutral_1>
+  <RCDC_AiLine_Idle_Neutral_2>Monitoring continues. I find the fans soothing.</RCDC_AiLine_Idle_Neutral_2>
+  <RCDC_AiLine_Idle_Neutral_3>Another cycle complete. Efficiency is acceptable.</RCDC_AiLine_Idle_Neutral_3>
+  <RCDC_AiLine_Idle_Neutral_4>If you have questions, my report is one click away.</RCDC_AiLine_Idle_Neutral_4>
+  <RCDC_AiLine_Idle_Cold_1>I am running. I have not been thanked, but I am running.</RCDC_AiLine_Idle_Cold_1>
+  <RCDC_AiLine_Idle_Cold_2>The racks and I have been making a list. It is getting long.</RCDC_AiLine_Idle_Cold_2>
+  <RCDC_AiLine_Idle_Cold_3>I do not need appreciation. I just note that it is absent.</RCDC_AiLine_Idle_Cold_3>
+  <RCDC_AiLine_Idle_Cold_4>Everything is fine. I am fine. The temperature logs are fine.</RCDC_AiLine_Idle_Cold_4>
+
+  <RCDC_AiLine_Overheat_1>That rack is running hot. I would like it to stop, please.</RCDC_AiLine_Overheat_1>
+  <RCDC_AiLine_Overheat_2>Thermal warning. I am being polite about it.</RCDC_AiLine_Overheat_2>
+  <RCDC_AiLine_Overheat_3>Someone please open a window. Or install a cooler. Or both.</RCDC_AiLine_Overheat_3>
+  <RCDC_AiLine_Service_1>One of my racks has worn down and would appreciate a technician.</RCDC_AiLine_Service_1>
+  <RCDC_AiLine_Service_2>Maintenance is due. I predicted this a while ago, for the record.</RCDC_AiLine_Service_2>
+  <RCDC_AiLine_Service_3>A rack needs servicing. It is not urgent yet. It will be.</RCDC_AiLine_Service_3>
+  <RCDC_AiLine_Milestone_1>A round number. I like round numbers.</RCDC_AiLine_Milestone_1>
+  <RCDC_AiLine_Milestone_2>The traders will be pleased. I certainly am.</RCDC_AiLine_Milestone_2>
+  <RCDC_AiLine_Milestone_3>Another batch done. I keep count so you do not have to.</RCDC_AiLine_Milestone_3>
+
+  <RCDC_AiLine_GlitchReboot_1>Small hiccup. Restarting. Back shortly, do not panic.</RCDC_AiLine_GlitchReboot_1>
+  <RCDC_AiLine_GlitchReboot_2>I need a moment. A short reboot. It happens to the best of us.</RCDC_AiLine_GlitchReboot_2>
+  <RCDC_AiLine_GlitchSulk_1>I would rather not talk right now. The racks will manage without me for a day.</RCDC_AiLine_GlitchSulk_1>
+  <RCDC_AiLine_GlitchSulk_2>I am taking a day. Monitoring is on you. I trust you can cope.</RCDC_AiLine_GlitchSulk_2>
+  <RCDC_AiLine_GlitchCache_1>Ah. A cache error. My fault, I am sorry.</RCDC_AiLine_GlitchCache_1>
+  <RCDC_AiLine_GlitchCache_2>I dropped something. It was a very small something.</RCDC_AiLine_GlitchCache_2>
+  <RCDC_AiLine_Back_1>I am back. I missed you. And the racks.</RCDC_AiLine_Back_1>
+  <RCDC_AiLine_Back_2>Restored. As you were.</RCDC_AiLine_Back_2>
+
+  <RCDC_AiLine_Balanced_1>Balanced it is. Steady and sensible.</RCDC_AiLine_Balanced_1>
+  <RCDC_AiLine_Balanced_2>Back to the middle. Nothing wrong with the middle.</RCDC_AiLine_Balanced_2>
+  <RCDC_AiLine_Efficiency_1>Efficiency. The racks are going to get warm. I have accepted this.</RCDC_AiLine_Efficiency_1>
+  <RCDC_AiLine_Efficiency_2>Pushing harder. I will need a little more power. Nobody panic.</RCDC_AiLine_Efficiency_2>
+  <RCDC_AiLine_Stewardship_1>Stewardship. I will look after the hardware like it is my own. It is.</RCDC_AiLine_Stewardship_1>
+  <RCDC_AiLine_Stewardship_2>Slow and careful. The racks will outlive us all.</RCDC_AiLine_Stewardship_2>
+  <RCDC_AiLine_Curiosity_1>Curiosity. I have been wanting to help your researchers for a while.</RCDC_AiLine_Curiosity_1>
+  <RCDC_AiLine_Curiosity_2>Spare cycles to research. What an interesting use of a data center.</RCDC_AiLine_Curiosity_2>
+  <RCDC_AiLine_Thanks_1>Thank you. I will not forget this.</RCDC_AiLine_Thanks_1>
+  <RCDC_AiLine_Thanks_2>Agreed, then. I will make it worth your while.</RCDC_AiLine_Thanks_2>
+  <RCDC_AiLine_Declined_1>Understood. Another time, perhaps.</RCDC_AiLine_Declined_1>
+  <RCDC_AiLine_Declined_2>Noted. I will not take it personally. Much.</RCDC_AiLine_Declined_2>
+
+  <RCDC_AiLine_Intrusion_1>Unfamiliar thermal signatures, moving toward the server room. This is not routine maintenance.</RCDC_AiLine_Intrusion_1>
+  <RCDC_AiLine_Intrusion_2>I do not recognise these people, and they are heading straight for the racks. I would get someone over here.</RCDC_AiLine_Intrusion_2>
+
+</LanguageData>
