@@ -8,6 +8,10 @@ colonists who monitor and service the equipment.
 * **Version:** 0.5.0 &nbsp;|&nbsp; **Supports:** RimWorld 1.5 and 1.6 &nbsp;|&nbsp; **License:** MIT
 * **Requires:** nothing (no DLC, no Harmony, no other mods)
 
+## Development approach
+
+Development is AI-assisted. Claude has been used extensively for implementation, while project direction, feature design, testing, iteration, release management and ongoing maintenance are handled by the project maintainer. AI-generated changes are tested against the game and reviewed as part of the release workflow.
+
 ## Playing it
 
 1. Finish the research project **Data Center Infrastructure** (needs a hi-tech research bench; the
@@ -177,7 +181,7 @@ and run the in-game self-test. Verbose logging is off by default and only writes
 
 ## Building from source
 
-See [docs/BUILD.md](docs/BUILD.md). The short version (needs the .NET SDK and RimWorld 1.5 installed):
+See [docs/BUILD.md](docs/BUILD.md). The short version (needs the .NET SDK and a RimWorld 1.5 or 1.6 install):
 
 ```powershell
 .\Tools\Build.ps1            # compile the assembly
@@ -198,7 +202,7 @@ Release/      generated packages (not committed)
 
 ## Compatibility
 
-* Requires RimWorld **1.5**. Works with or without Royalty, Ideology, Biotech and Anomaly.
+* Supports RimWorld **1.5 and 1.6**. Works with or without Royalty, Ideology, Biotech and Anomaly.
 * No Harmony and no patches to vanilla code. The only vanilla data changes are XML patches:
   a "buy" entry on a few trader kinds so they purchase cartridges (`Patches/RCDC_Traders.xml`), and
   two stat parts added to the vanilla Research Speed and Market Value stats (`Patches/RCDC_Stats.xml`).
