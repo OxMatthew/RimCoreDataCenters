@@ -2,8 +2,9 @@
 
 ## What you need
 
-* **RimWorld 1.5** installed (any store). The build compiles against its managed assemblies and does not
-  copy or redistribute them. Version tested: 1.5.4409.
+* **RimWorld 1.5 or 1.6** installed (any store). The build compiles against the managed assemblies from
+  the installed version and does not copy or redistribute them. Use `-RwVersion 1.6` / `/p:RwVersion=1.6`
+  when building against RimWorld 1.6; otherwise the project defaults to 1.5.
 * The **.NET SDK** (6.0 or newer; 8.0 was used). RimWorld 1.5 runs on Unity's Mono with the .NET Framework
   4.7.2 profile, so the project targets `net472`; the SDK supplies the compiler and the official
   `Microsoft.NETFramework.ReferenceAssemblies.net472` NuGet package supplies the reference assemblies.
@@ -23,7 +24,8 @@ $env:RIMWORLD_DIR = "D:\Games\RimWorld"
 ## Everyday commands
 
 ```powershell
-.\Tools\Build.ps1              # compile -> Mod\1.5\Assemblies\RimCoreDataCenters.dll
+.\Tools\Build.ps1              # compile 1.5 -> Mod\1.5\Assemblies\RimCoreDataCenters.dll
+.\Tools\Build.ps1 -RwVersion 1.6 # compile 1.6 -> Mod\1.6\Assemblies\RimCoreDataCenters.dll
 .\Tools\Validate-Xml.ps1       # XML well-formedness, About.xml, def names, keyed strings, textures, sounds
 .\Tools\Generate-Assets.ps1    # regenerate textures + sounds (add -Preview for the Workshop preview image)
 .\Tools\Install-ToGame.ps1     # copy Mod\ into the game's Mods folder for playing/testing
@@ -37,8 +39,8 @@ Direct compile without the scripts:
 dotnet build Source\RimCoreDataCenters\RimCoreDataCenters.csproj -c Release /p:RimWorldDir="C:\path\to\RimWorld"
 ```
 
-The assembly is written straight into `Mod\1.5\Assemblies`. Symbols are not produced and source paths are
-mapped to `Source`, so the DLL contains no machine-specific paths.
+The assembly is written into `Mod\<version>\Assemblies` for the selected RimWorld version. Symbols are not
+produced and source paths are mapped to `Source`, so the DLL contains no machine-specific paths.
 
 ## The in-game self-test
 
