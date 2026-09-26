@@ -1,4 +1,4 @@
-# Balance reference (v0.5.0)
+# Balance reference (v0.6.0)
 
 Every number below is an XML value (`Mod/Defs/RCDC_Buildings.xml`, `RCDC_Items.xml`,
 `RCDC_Research.xml`, `RCDC_Security.xml`) unless noted. Time: 60,000 ticks = 1 day, 2,500 ticks = 1 hour.
@@ -254,7 +254,30 @@ entirely through vanilla letter and drop-pod machinery (`DropPodUtility.DropThin
 Declining or missing the deadline costs nothing - these are opportunities layered on top of the existing
 trade loop, not an obligation. A contract's silver bonus is still bounded by how many cartridges the colony
 can actually produce in the deadline window, so it cannot be used to convert an idle data center into free
-silver.
+silver. Since 0.6.0, a contract's quoted bonus also captures whatever market dynamics multiplier is active
+on that cartridge type at accept time - timing a contract during a rival-buyer or shortage event compounds
+with the contract's own bonus.
+
+## Market dynamics (v0.6.0)
+
+Cartridge prices are no longer static. `MapComponent_MarketDynamics` drifts each of the four data types'
+price within a band via a bounded random walk, and occasionally layers a named event on top of one type.
+Read entirely through a single `StatPart` on `MarketValue` (`StatPart_MarketDynamics`) - no new building, no
+letter requiring a decision, just numbers that move and a line on the Operations Console.
+
+| Value | Setting |
+| --- | --- |
+| Drift step | every 2-4 days, each type's baseline takes a random step of up to +/-5% |
+| Drift band | clamped to 85-120% of base value |
+| Event check | every 4-8 days while no event is active, a 35% chance one starts |
+| Event duration | 4-7 days |
+| Rival buyer / Shortage | +15-35% on one cartridge type for the event's duration |
+| Market glut | -15-30% on one cartridge type for the event's duration |
+
+Stacks multiplicatively with everything else already affecting `MarketValue`: data specialization's base
+value differences, Secure Certification's +20%, and a data contract's own quoted bonus. Only one event is
+active per map at a time, and it targets a random one of the four cartridge types - there is no way to
+predict or force which type it lands on, by design.
 
 ## Why it is not an infinite-money exploit
 

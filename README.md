@@ -5,7 +5,7 @@ produce valuable **Data Cartridges** for traders, kept alive by power, precision
 colonists who monitor and service the equipment.
 
 * **Package ID:** `RimCore.DataCenters` (permanent, do not change between releases)
-* **Version:** 0.5.0 &nbsp;|&nbsp; **Supports:** RimWorld 1.5 and 1.6 &nbsp;|&nbsp; **License:** MIT
+* **Version:** 0.6.0 &nbsp;|&nbsp; **Supports:** RimWorld 1.5 and 1.6 &nbsp;|&nbsp; **License:** MIT
 * **Requires:** nothing (no DLC, no Harmony, no other mods)
 
 ## Development approach
@@ -142,6 +142,20 @@ and there is never more than one offer or active contract on a map at a time.
 * Before Data Classification is researched, contracts only ask for standard data; after, they can ask for
   any of the specialized cartridge types too.
 * Every number (offer frequency, quantity range, bonus range, deadline) is in `Defs/RCDC_Contracts.xml`.
+
+## Market dynamics (0.6.0)
+
+Cartridge prices no longer sit still. Each of the four data types drifts slowly within a band (85-120% of
+its base value by default), stepping every 2-4 days - so timing a sale, not just producing enough, starts
+to matter.
+
+* Occasionally a named event layers on top of one type for 4-7 days: a **rival buyer** or a **shortage**
+  pushes its price up (+15-35%), a **market glut** pushes it down (-15-30%). Only one event at a time.
+  Nothing to accept or decide - it just happens, like weather.
+* Current conditions are shown on the Operations Console's inspect text, so you can check what's worth
+  selling without opening a trade window.
+* Stacks multiplicatively with data specialization's own value differences and Secure Certification's
+  +20%. Every number is in `Defs/RCDC_Market.xml`.
 
 ## Balance at a glance
 

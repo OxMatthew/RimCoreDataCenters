@@ -167,6 +167,17 @@ namespace RimCore.DataCenters
             contracts.DevForceOffer();
         }
 
+        [DebugAction(Category, "Force a market event (rival buyer on standard data)", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        public static void ForceMarketEvent()
+        {
+            MapComponent_MarketDynamics market = MapComponent_MarketDynamics.For(Find.CurrentMap);
+            if (market == null)
+            {
+                return;
+            }
+            market.DevForceEvent(MarketEventKind.RivalBuyer, RcdcDefOf.RCDC_DataCartridge);
+        }
+
         [DebugAction(Category, "Print data center report", actionType = DebugActionType.Action, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         public static void PrintReport()
         {

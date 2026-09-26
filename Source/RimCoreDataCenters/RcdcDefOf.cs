@@ -44,6 +44,8 @@ namespace RimCore.DataCenters
         public static LetterDef RCDC_ContractLetter;
         public static DataContractSettingsDef RCDC_DataContractSettings;
 
+        public static MarketDynamicsSettingsDef RCDC_MarketDynamicsSettings;
+
         static RcdcDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(RcdcDefOf));

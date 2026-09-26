@@ -301,6 +301,11 @@ namespace RimCore.DataCenters
                     }
                 }
             }
+            MapComponent_MarketDynamics market = MapComponent_MarketDynamics.For(parent.Map);
+            if (market != null)
+            {
+                sb.Append('\n').Append("RCDC_ConsoleMarket".Translate(market.Describe()));
+            }
             return sb.ToString();
         }
 

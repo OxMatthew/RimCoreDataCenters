@@ -149,4 +149,13 @@
   <RCDC_Contract_ExpiredLabel>Data contract missed</RCDC_Contract_ExpiredLabel>
   <RCDC_Contract_ExpiredText>The deadline for {0} {1} has passed. You had {2} on hand. The buyer has moved on - nothing was taken, and nothing else is lost.</RCDC_Contract_ExpiredText>
 
+  <!-- ================= Market dynamics ================= -->
+  <RCDC_ConsoleMarket>Market: {0}</RCDC_ConsoleMarket>
+  <RCDC_Market_Steady>steady</RCDC_Market_Steady>
+  <RCDC_StatMarketDynamics>Market conditions</RCDC_StatMarketDynamics>
+  <RCDC_Market_RivalBuyerMessage>A rival buyer is paying {1}% more than usual for {0}.</RCDC_Market_RivalBuyerMessage>
+  <RCDC_Market_ShortageMessage>A shortage has pushed the price of {0} up {1}%.</RCDC_Market_ShortageMessage>
+  <RCDC_Market_GlutMessage>A glut of {0} on the market has cut its price by {1}%.</RCDC_Market_GlutMessage>
+  <RCDC_Market_EventEndedMessage>The market for {0} has settled back to normal.</RCDC_Market_EventEndedMessage>
+
 </LanguageData>

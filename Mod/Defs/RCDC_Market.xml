@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    Market dynamics: cartridge prices drift slowly, and occasionally a named event pushes one type further
+    up or down for a while (see Source/RimCoreDataCenters/Economy/MapComponent_MarketDynamics.cs). Pure
+    economy flavor - no new building, no letter requiring a decision. All numbers live here.
+  -->
+  <RimCore.DataCenters.MarketDynamicsSettingsDef>
+    <defName>RCDC_MarketDynamicsSettings</defName>
+    <driftIntervalMinDays>2</driftIntervalMinDays>
+    <driftIntervalMaxDays>4</driftIntervalMaxDays>
+    <driftStep>0.05</driftStep>
+    <driftMultiplierMin>0.85</driftMultiplierMin>
+    <driftMultiplierMax>1.20</driftMultiplierMax>
+    <eventCheckIntervalMinDays>4</eventCheckIntervalMinDays>
+    <eventCheckIntervalMaxDays>8</eventCheckIntervalMaxDays>
+    <eventChance>0.35</eventChance>
+    <eventDurationMinDays>4</eventDurationMinDays>
+    <eventDurationMaxDays>7</eventDurationMaxDays>
+    <eventBonusMin>1.15</eventBonusMin>
+    <eventBonusMax>1.35</eventBonusMax>
+    <eventMalusMin>0.70</eventMalusMin>
+    <eventMalusMax>0.85</eventMalusMax>
+  </RimCore.DataCenters.MarketDynamicsSettingsDef>
+
+</Defs>

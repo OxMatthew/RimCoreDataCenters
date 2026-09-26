@@ -410,6 +410,7 @@ namespace RimCore.DataCenters
             foreach (Waiter w in SectionAi()) yield return w;
             foreach (Waiter w in SectionEspionage()) yield return w;
             foreach (Waiter w in SectionContracts()) yield return w;
+            foreach (Waiter w in SectionMarket()) yield return w;
             foreach (Waiter w in SectionSaveLoad()) yield return w;
         }
 
@@ -1141,6 +1142,11 @@ namespace RimCore.DataCenters
             public ThingDef ContractDef;
             public int ContractQuantity;
             public int ContractReward;
+            public bool MarketHasEvent;
+            public ThingDef MarketEventDef;
+            public MarketEventKind MarketEventKind;
+            public float MarketEventMultiplier;
+            public float MarketStandardBaseline;
         }
 
         /// <summary>
@@ -1205,6 +1211,12 @@ namespace RimCore.DataCenters
             s.ContractDef = contracts == null ? null : contracts.ActiveDef;
             s.ContractQuantity = contracts == null ? 0 : contracts.ActiveQuantity;
             s.ContractReward = contracts == null ? 0 : contracts.ActiveRewardSilver;
+            MapComponent_MarketDynamics market = MapComponent_MarketDynamics.For(Map);
+            s.MarketHasEvent = market != null && market.HasEvent;
+            s.MarketEventDef = market == null ? null : market.EventDef;
+            s.MarketEventKind = market == null ? MarketEventKind.RivalBuyer : market.EventKind;
+            s.MarketEventMultiplier = market == null ? 1f : market.EventMultiplier;
+            s.MarketStandardBaseline = market == null ? 1f : market.BaselineMultiplier(RcdcDefOf.RCDC_DataCartridge);
             return s;
         }
 
@@ -1268,9 +1280,11 @@ namespace RimCore.DataCenters
             Check("finished upgrade research survives the save/load", snapshot.UpgradesFinished == 10 && after.UpgradesFinished == snapshot.UpgradesFinished, snapshot.UpgradesFinished + " -> " + after.UpgradesFinished);
             Check("upgrades are re-applied after load (core capacity 10, UPS 200 Wd)", after.CoreCapacity == 10 && Near(after.UpsCapacity, 200f, 0.01f), after.CoreCapacity + " racks, UPS " + after.UpsCapacity);
             Check("certification is still recognised after load", snapshot.Certified && after.Certified);
+            // 96 = base 80 x certification's 1.2; market dynamics (loaded above) stacks its own multiplier on top.
+            float marketAfterLoad = MapComponent_MarketDynamics.For(Map).PriceMultiplier(RcdcDefOf.RCDC_DataCartridge);
             float priceAfterLoad = RcdcDefOf.RCDC_DataCartridge.GetStatValueAbstract(StatDefOf.MarketValue);
-            Check("the certified price survives the load", Near(priceAfterLoad, 96f, 0.05f),
-                priceAfterLoad.ToString("F2") + ", certified " + MapComponent_DataCenterNetwork.For(Map).IsCertified + ", bonus " + RcdcUpgrades.Current.CertifiedPriceBonus
+            Check("the certified price survives the load", Near(priceAfterLoad, 96f * marketAfterLoad, 0.05f),
+                priceAfterLoad.ToString("F2") + " vs expected " + (96f * marketAfterLoad).ToString("F2") + ", certified " + MapComponent_DataCenterNetwork.For(Map).IsCertified + ", bonus " + RcdcUpgrades.Current.CertifiedPriceBonus
                 + ", doors " + string.Join(" ", MapComponent_DataCenterNetwork.For(Map).AccessDoors.Select(d => d.def.defName + ":" + d.DoorPowerOn).ToArray()));
 
             // The AI core: its mood, directive and an unanswered request survive the save.
@@ -1296,6 +1310,13 @@ namespace RimCore.DataCenters
             Check("the active data contract survives the save/load", snapshot.ContractActive && after.ContractActive);
             Check("the loaded contract's terms are unchanged", after.ContractDef == snapshot.ContractDef && after.ContractQuantity == snapshot.ContractQuantity
                 && after.ContractReward == snapshot.ContractReward, snapshot.ContractDef?.defName + " x" + snapshot.ContractQuantity + " -> " + after.ContractDef?.defName + " x" + after.ContractQuantity);
+
+            // Market dynamics: the drifted baseline and any active event survive the save/load too.
+            Check("the drifted market baseline survives the save/load", Near(after.MarketStandardBaseline, snapshot.MarketStandardBaseline, 0.001f),
+                snapshot.MarketStandardBaseline.ToString("F3") + " -> " + after.MarketStandardBaseline.ToString("F3"));
+            Check("the active market event survives the save/load", snapshot.MarketHasEvent && after.MarketHasEvent);
+            Check("the loaded market event's terms are unchanged", after.MarketEventDef == snapshot.MarketEventDef && after.MarketEventKind == snapshot.MarketEventKind
+                && Near(after.MarketEventMultiplier, snapshot.MarketEventMultiplier, 0.001f));
 
             // The loaded data center keeps working: refresh and run a few thousand ticks.
             layout = null;

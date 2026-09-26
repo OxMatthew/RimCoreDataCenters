@@ -4,6 +4,19 @@ All notable changes are documented here. This project follows [Semantic Versioni
 `MAJOR.MINOR.PATCH`. The version lives in one place, `Mod/About/About.xml` (`<modVersion>`), and the
 release script stamps the same number into the assembly.
 
+## 0.6.0 - market dynamics
+
+Supports RimWorld 1.5 and 1.6. No DLC and no other mods required. Saves from 0.1.0 through 0.5.0 load unchanged.
+
+### Added
+- **Market dynamics**: each data cartridge type's price now drifts slowly within a band (85-120% of base
+  value by default) instead of sitting still, stepping every 2-4 days. Occasionally a named market event
+  layers on top of one type for 4-7 days: a **rival buyer** or a **shortage** pushes its price up
+  (+15-35%), a **market glut** pushes it down (-15-30%). Only one event active at a time, map-wide.
+  Current conditions are shown on the Operations Console's inspect text. All numbers live in
+  `Defs/RCDC_Market.xml` (`MarketDynamicsSettingsDef`); the mechanism is a single new `StatPart` on
+  `MarketValue`, stacking multiplicatively with specialization value and secure certification's bonus.
+
 ## 0.5.0 - data contracts
 
 Supports RimWorld 1.5 and 1.6. No DLC and no other mods required. Saves from 0.1.0 through 0.4.0 load unchanged.

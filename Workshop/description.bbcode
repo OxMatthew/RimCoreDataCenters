@@ -3,6 +3,7 @@
 
 Research [b]Data Center Infrastructure[/b], then construct racks of servers that compile valuable [b]Data Cartridges[/b] for traders. A midgame investment: real power, real cooling, skilled colonists and a pile of components, rewarding you when you run it well.
 
+[b]0.6:[/b] [b]market dynamics[/b] - cartridge prices drift over time, plus occasional rival buyer, shortage or glut events.
 [b]0.5:[/b] [b]data contracts[/b] - a buyer occasionally offers a timed bulk order for a silver bonus; accept, decline or ignore it, no penalty either way.
 [b]0.4:[/b] [b]data specialization[/b] (research, financial or medical cartridges per rack) and [b]espionage[/b], a small raid built from the game's own raid system that tries to steal your cartridges and flee.
 [b]0.3:[/b] the [b]AI core[/b], "Meridian" - an on-site intelligence with a personality that runs your data center, forecasts maintenance and sends you small requests. Harmless glitches only, nothing hostile.
@@ -31,8 +32,8 @@ Research [b]Cognitive Computing[/b] and build an [b]AI core[/b] in a cool room i
 [*] [b]Runs the place[/b] - monitors every rack, no operations shifts needed, shows a service forecast, writes a status report on request.
 [*] [b]Directives[/b] - Balanced, Efficiency (faster, hotter, more power), Stewardship (slower wear, hotter limits), Curiosity (bigger research uplink, lower output).
 [*] [b]Rapport[/b] scales its benefits: better when the data center is healthy, worse when neglected.
-[*] [b]Requests[/b] every week or two: lend compute to research, an overclock window, or a maintenance window.
-[*] [b]Small risks only[/b]: a reboot, a day of sulking, or one rack loses its current progress. Nothing hostile. Rarer with high rapport and in a certified data center.
+[*] [b]Requests[/b] every week or two: lend compute, an overclock window, or a maintenance window.
+[*] [b]Small risks only[/b]: a reboot, a sulk, or one rack loses progress. Nothing hostile; rarer at high rapport.
 [/list]
 
 Every running rack also adds research speed for all colonists (up to +20%, or +45% with Distributed Computing) - the Operations Console shows the current bonus.
@@ -41,18 +42,16 @@ Every running rack also adds research speed for all colonists (up to +20%, or +4
 [list]
 [*] [b]Biometric Access Door[/b] - colony members only; visitors and prisoners are turned away.
 [*] [b]Metal Detector Gate[/b] - colony members and unarmed visitors pass; anyone carrying a weapon is refused.
-[*] Turned-away visitors are logged, with a message, sound and Access Denied alert. No power = fail secure (colony members only).
+[*] Turned-away visitors are logged, with an alert. No power = fail secure (colony members only).
 [*] [b]Secure Certification[/b]: with a working door of each kind, data cartridges sell for 20% more.
-[*] Access control, not a raid defence - raiders still have to break a door down.
 [/list]
 
 [h2]Data specialization[/h2]
 Research [b]Data Classification[/b] (only needs the root project) to unlock a Specialization command on every rack. Switching keeps the rack's progress.
 [list]
-[*] [b]Financial Data[/b] - worth 110 instead of 80. The plain "more silver" choice.
-[*] [b]Research Data[/b] - same value, but a stockpile adds up to +8% research speed on top of the uplink.
-[*] [b]Medical Data[/b] - same value, but a stockpile speeds up immunity gain by up to +15%.
-[*] Secure Certification's +20% lifts every data type together.
+[*] [b]Financial Data[/b] - worth 110 instead of 80, the plain "more silver" choice.
+[*] [b]Research Data[/b] - a stockpile adds up to +8% research speed on top of the uplink.
+[*] [b]Medical Data[/b] - a stockpile speeds up immunity gain by up to +15%.
 [/list]
 
 [h2]Espionage[/h2]
@@ -60,6 +59,9 @@ A new, occasional small raid built entirely from the game's own raid system, so 
 
 [h2]Data contracts[/h2]
 Once a rack is running, a buyer occasionally offers a timed contract: deliver N cartridges of a type within a deadline for 20-40% over market value. Accept, decline or let it lapse - nothing is ever taken from you for saying no. Deliver enough and the silver bonus drops near your trade spot; miss the deadline and it just expires.
+
+[h2]Market dynamics[/h2]
+Each data type's price drifts slowly within a band instead of sitting still, and occasionally a rival buyer or shortage pushes one type up, or a glut pushes it down, for a few days. Shown on the Operations Console. Stacks with specialization and certification.
 
 [h2]How it plays[/h2]
 [list]
@@ -82,14 +84,14 @@ Requires [b]RimWorld 1.5 or 1.6[/b], no DLC needed. [b]No Harmony[/b], no other 
 [b]"No Network"?[/b] Needs a powered core within 12.9 cells with a free slot.
 [b]Racks only make 65%?[/b] Unmonitored - run a console shift, or use an AI core.
 [b]Can traders sell me cartridges?[/b] No, they only buy.
-[b]Is the AI a real chatbot?[/b] No - no network access, no language model (worst case: a reboot, a sulk, or one rack loses progress).
-[b]Does it need Harmony or a DLC?[/b] No.
-[b]Are espionage and contracts guaranteed?[/b] No - occasional events among many, not on a fixed schedule.
+[b]Is the AI a real chatbot?[/b] No - no network access, no language model.
+[b]Are events guaranteed?[/b] No - espionage, contracts and market events are occasional, not scheduled.
 
 [h2]Credits and license[/h2]
 Design, code, textures, sounds and preview art: RimCore, all original and procedurally generated. RimWorld is created by Ludeon Studios; this mod is unofficial. Open source under the [b]MIT License[/b].
 
 [h2]Changelog[/h2]
+[b]0.6.0[/b] - market dynamics.
 [b]0.5.0[/b] - data contracts.
 [b]0.4.0[/b] - data specialization and the espionage raid.
 [b]0.3.0[/b] - the AI core (Meridian).

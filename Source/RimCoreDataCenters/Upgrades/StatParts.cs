@@ -130,4 +130,56 @@ namespace RimCore.DataCenters
             return "RCDC_StatCertified".Translate() + ": x" + (1f + bonus).ToString("F2");
         }
     }
+
+    /// <summary>
+    /// Cartridge prices drift slowly over time, and occasionally a market event (a rival buyer, a glut or a
+    /// shortage) pushes one type further up or down for a while.
+    /// Attached to the vanilla MarketValue stat by Patches/RCDC_Stats.xml.
+    /// </summary>
+    public class StatPart_MarketDynamics : StatPart
+    {
+        private static bool AppliesTo(StatRequest req)
+        {
+            return req.Def != null && RcdcDefOf.IsDataCartridge(req.Def as ThingDef);
+        }
+
+        private static float MultiplierFor(StatRequest req)
+        {
+            if (!AppliesTo(req) || Current.ProgramState != ProgramState.Playing)
+            {
+                return 1f;
+            }
+            Map map = req.HasThing ? req.Thing.MapHeld : null;
+            if (map == null)
+            {
+                map = Find.AnyPlayerHomeMap;
+            }
+            MapComponent_MarketDynamics market = MapComponent_MarketDynamics.For(map);
+            return market == null ? 1f : market.PriceMultiplier(req.Def as ThingDef);
+        }
+
+        public override void TransformValue(StatRequest req, ref float val)
+        {
+            float multiplier = MultiplierFor(req);
+            if (!Near(multiplier, 1f))
+            {
+                val *= multiplier;
+            }
+        }
+
+        public override string ExplanationPart(StatRequest req)
+        {
+            float multiplier = MultiplierFor(req);
+            if (Near(multiplier, 1f))
+            {
+                return null;
+            }
+            return "RCDC_StatMarketDynamics".Translate() + ": x" + multiplier.ToString("F2");
+        }
+
+        private static bool Near(float a, float b)
+        {
+            return System.Math.Abs(a - b) < 0.005f;
+        }
+    }
 }

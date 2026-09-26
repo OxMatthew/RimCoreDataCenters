@@ -3,7 +3,7 @@
   <name>RimCore Data Centers</name>
   <author>RimCore</author>
   <packageId>RimCore.DataCenters</packageId>
-  <modVersion>0.5.0</modVersion>
+  <modVersion>0.6.0</modVersion>
   <supportedVersions>
     <li>1.5</li>
     <li>1.6</li>
@@ -50,6 +50,11 @@ NEW IN 0.5: DATA CONTRACTS
 - Accept, decline, or let it lapse - nothing is ever taken from you for saying no. Only one offer or active contract at a time.
 - Deliver enough before the deadline and the silver bonus arrives near your trade spot; miss it and the contract simply expires, no penalty.
 - Requires at least one running server rack; once Data Classification is researched, contracts can also ask for the specialized cartridge types.
+
+NEW IN 0.6: MARKET DYNAMICS
+- Each data cartridge type's price now drifts slowly over time, within a band, instead of sitting still.
+- Occasional market events layer on top of one type for a while: a rival buyer or a shortage pushes its price up, a glut pushes it down.
+- Current conditions are shown on the Operations Console, so you don't need to open a trade window to know what's worth selling.
 
 REQUIREMENTS
 RimWorld 1.5 or 1.6. No DLC and no other mods required. Safe to add to an existing save (0.1.0-0.3.0 saves load unchanged). Removing the mod from a save that contains its buildings is not supported.

@@ -1,3 +1,10 @@
+[h1]0.6.0 - market dynamics[/h1]
+[list]
+[*] New: each data cartridge type's price now drifts slowly within a band (85-120% of base value) instead of sitting still.
+[*] Occasional market events layer on top of one type for a few days: a rival buyer or shortage pushes its price up (+15-35%), a glut pushes it down (-15-30%). Only one event at a time.
+[*] Current conditions are shown on the Operations Console's inspect text.
+[/list]
+
 [h1]0.5.0 - data contracts[/h1]
 [list]
 [*] New: once a server rack is running, a buyer occasionally offers a timed data contract - deliver N cartridges of a given type within a deadline for a 20-40% silver bonus over market value.

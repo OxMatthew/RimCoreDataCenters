@@ -64,4 +64,12 @@
     </nomatch>
   </Operation>
 
+  <!-- Market dynamics: slow price drift plus occasional rival buyer / glut / shortage events. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/StatDef[defName="MarketValue"]/parts</xpath>
+    <value>
+      <li Class="RimCore.DataCenters.StatPart_MarketDynamics"/>
+    </value>
+  </Operation>
+
 </Patch>
