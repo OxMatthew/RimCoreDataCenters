@@ -3,7 +3,7 @@
   <name>RimCore Data Centers</name>
   <author>RimCore</author>
   <packageId>RimCore.DataCenters</packageId>
-  <modVersion>0.6.0</modVersion>
+  <modVersion>0.7.0</modVersion>
   <supportedVersions>
     <li>1.5</li>
     <li>1.6</li>
@@ -55,6 +55,12 @@ NEW IN 0.6: MARKET DYNAMICS
 - Each data cartridge type's price now drifts slowly over time, within a band, instead of sitting still.
 - Occasional market events layer on top of one type for a while: a rival buyer or a shortage pushes its price up, a glut pushes it down.
 - Current conditions are shown on the Operations Console, so you don't need to open a trade window to know what's worth selling.
+
+NEW IN 0.7: A DEEPER AI PERSONALITY
+- Meridian now develops a slow-forming personality on top of rapport: care (how well the data center is kept up) and stability (how often it glitches).
+- After a long enough consistent pattern it settles into a trait: Meticulous or Neglected from care, Steady or Anxious from stability. Small, always-harmless effects: Meticulous trims wear a touch further, Steady makes glitches a little rarer still.
+- A new request, a self-calibration pass, temporarily doubles how fast the personality forms.
+- The current trait shows on the AI core's inspect text and in its status report, and colours its idle chatter.
 
 REQUIREMENTS
 RimWorld 1.5 or 1.6. No DLC and no other mods required. Safe to add to an existing save (0.1.0-0.3.0 saves load unchanged). Removing the mod from a save that contains its buildings is not supported.

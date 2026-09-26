@@ -73,6 +73,10 @@ namespace RimCore.DataCenters
                 sb.AppendLine("RCDC_AiReportForecast".Translate(soonest.parent.LabelShort, soonestDays.ToString("F1")));
             }
             sb.AppendLine("RCDC_AiReportMood".Translate(ai.MoodLabel, Mathf.RoundToInt(ai.Rapport)));
+            if (ai.Trait != AiTrait.Developing)
+            {
+                sb.AppendLine("RCDC_AiReportTrait".Translate(("RCDC_AiTrait_" + ai.Trait).Translate()));
+            }
             sb.AppendLine();
 
             // Recommendations, most urgent first, at most three.

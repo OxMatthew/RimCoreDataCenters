@@ -37,15 +37,16 @@ namespace RimCore.DataCenters
             Check("the AI research is locked", cognitive != null && !cognitive.IsFinished && !cognitive.PrerequisitesCompleted && adaptive != null && !adaptive.IsFinished);
 
             List<string> missing = AiVoice.AllKeys().Where(k => !k.CanTranslate()).ToList();
-            Check("every line the AI can say exists as a keyed string", missing.Count == 0 && AiVoice.AllKeys().Count() == 46, missing.Count + " missing of " + AiVoice.AllKeys().Count() + " " + string.Join(",", missing.Take(3).ToArray()));
+            Check("every line the AI can say exists as a keyed string", missing.Count == 0 && AiVoice.AllKeys().Count() == 54, missing.Count + " missing of " + AiVoice.AllKeys().Count() + " " + string.Join(",", missing.Take(3).ToArray()));
             List<string> dynamicKeys = new List<string>();
             foreach (AiStatus s in Enum.GetValues(typeof(AiStatus))) dynamicKeys.Add("RCDC_AiStatus_" + s);
             foreach (AiDirective d in Enum.GetValues(typeof(AiDirective))) { dynamicKeys.Add("RCDC_AiDirective_" + d); dynamicKeys.Add("RCDC_AiDirectiveDesc_" + d); }
             foreach (AiBoon b in Enum.GetValues(typeof(AiBoon))) dynamicKeys.Add("RCDC_AiBoon_" + b);
-            foreach (AiBoon b in new[] { AiBoon.ComputeLoan, AiBoon.Overclock, AiBoon.Diagnostics })
+            foreach (AiBoon b in new[] { AiBoon.ComputeLoan, AiBoon.Overclock, AiBoon.Diagnostics, AiBoon.Calibration })
             {
                 foreach (string part in new[] { "Label", "Text", "Accept", "Decline" }) dynamicKeys.Add("RCDC_AiReq_" + b + "_" + part);
             }
+            foreach (AiTrait t in new[] { AiTrait.Meticulous, AiTrait.Neglected, AiTrait.Steady, AiTrait.Anxious }) dynamicKeys.Add("RCDC_AiTrait_" + t);
             List<string> missingDynamic = dynamicKeys.Where(k => !k.CanTranslate()).ToList();
             Check("every status, directive, arrangement and request string exists", missingDynamic.Count == 0, string.Join(",", missingDynamic.ToArray()));
             yield return null;
@@ -287,6 +288,99 @@ namespace RimCore.DataCenters
             Check("adaptive learning: glitches 30% rarer", Near(ai.GlitchMeanTicks() / meanBefore, 1f / 0.7f, 0.01f), (ai.GlitchMeanTicks() / meanBefore).ToString("F3"));
             ai.SetDirective(AiDirective.Balanced);
 
+            // --- Personality traits: care and stability drift slowly, distinct from rapport.
+            // Earlier sections already ran daily updates and glitches, so care/stability have drifted from
+            // their 50/50 defaults by now - reset them explicitly rather than assuming a still-fresh core.
+            ai.DevSetCare(50f);
+            ai.DevSetStability(50f);
+            Check("centered care and stability mean no trait yet (still developing)", ai.Trait == AiTrait.Developing);
+
+            foreach (CompServerRack r in AllRacks()) { r.DevSetWear(0.1f); r.DevSetShutdown(false); r.DevRefresh(); }
+            float careBeforeGood = ai.Care;
+            ai.DevRunDaily();
+            Check("a good day raises care", ai.Care > careBeforeGood, careBeforeGood + " -> " + ai.Care);
+            Rack(1).DevSetWear(0.7f);
+            Rack(1).DevRefresh();
+            float careBeforeBad = ai.Care;
+            ai.DevRunDaily();
+            Check("a bad day lowers care", ai.Care < careBeforeBad, careBeforeBad + " -> " + ai.Care);
+            Rack(1).DevSetWear(0.1f);
+            Rack(1).DevRefresh();
+
+            float stabilityBefore = ai.Stability;
+            ai.TriggerGlitch(AiGlitch.Reboot);
+            Check("a glitch lowers stability", ai.Stability < stabilityBefore, stabilityBefore + " -> " + ai.Stability);
+            ai.DevClear();
+
+            ai.DevSetRapport(100f);
+            ai.DevSetCare(90f);
+            ai.DevSetStability(50f);
+            Check("high care becomes the Meticulous trait", ai.Trait == AiTrait.Meticulous);
+            AiModifiers meticulousMods = network.Ai;
+            // Reproduce CompAiCore's own Scale(full, strength) = 1 + (full - 1) * strength: Adaptive Learning
+            // (already researched earlier in this section) adds to Strength, so it is not exactly 1 here.
+            float expectedBaseWear = 1f + (ai.Props.diagnosticsWear - 1f) * ai.Strength;
+            Check("meticulous trait trims wear a little further", Near(meticulousMods.Wear, expectedBaseWear * ai.Props.meticulousWearBonus, 0.001f),
+                meticulousMods.Wear.ToString("F4") + " vs " + (expectedBaseWear * ai.Props.meticulousWearBonus).ToString("F4") + " (strength " + ai.Strength.ToString("F3") + ")");
+
+            ai.DevSetCare(10f);
+            Check("low care becomes the Neglected trait", ai.Trait == AiTrait.Neglected);
+
+            ai.DevSetCare(50f);
+            ai.DevSetStability(50f);
+            float meanDeveloping = ai.GlitchMeanTicks();
+            ai.DevSetStability(90f);
+            Check("high stability becomes the Steady trait", ai.Trait == AiTrait.Steady);
+            float meanSteady = ai.GlitchMeanTicks();
+            Check("the steady trait makes glitches rarer still, on top of mood", Near(meanSteady / meanDeveloping, ai.Props.steadyGlitchDaysMultiplier, 0.01f), (meanSteady / meanDeveloping).ToString("F3"));
+
+            ai.DevSetStability(10f);
+            Check("low stability becomes the Anxious trait", ai.Trait == AiTrait.Anxious);
+            ai.DevSetCare(50f);
+            ai.DevSetStability(50f);
+            Check("back at center, the trait returns to Developing", ai.Trait == AiTrait.Developing);
+
+            ai.DevSetCare(90f);
+            string inspectWithTrait = aiThing.GetInspectString();
+            // RimWorld capitalizes the first letter after ": " in a translated sentence, so "Personality: {0}"
+            // renders as "Personality: Meticulous" - match case-insensitively rather than the raw keyed string.
+            Check("the inspect text shows the personality trait with no missing strings",
+                inspectWithTrait.Contains("Personality") && inspectWithTrait.IndexOf("meticulous", System.StringComparison.OrdinalIgnoreCase) >= 0 && !inspectWithTrait.Contains("RCDC_"),
+                inspectWithTrait.Replace('\n', '|'));
+            string reportWithTrait = AiReport.Build(ai);
+            Check("the report mentions the personality trait with no missing strings",
+                reportWithTrait.IndexOf("meticulous", System.StringComparison.OrdinalIgnoreCase) >= 0 && !reportWithTrait.Contains("RCDC_"), reportWithTrait.Replace('\n', '|'));
+            Check("the AI voice has lines for every trait", new[] { AiTrait.Meticulous, AiTrait.Neglected, AiTrait.Steady, AiTrait.Anxious }
+                .All(t => AiVoice.Line("Trait_" + t).Length > 5 && !AiVoice.Line("Trait_" + t).Contains("RCDC_")));
+
+            // A calibration request doubles how fast care and stability drift while it is active.
+            ai.DevClear();
+            ai.DevSetCare(50f);
+            foreach (CompServerRack r in AllRacks()) { r.DevSetWear(0.1f); r.DevSetShutdown(false); r.DevRefresh(); }
+            ai.SendRequest(AiBoon.Calibration);
+            letter = Find.LetterStack.LettersListForReading.OfType<ChoiceLetter_AiRequest>().LastOrDefault();
+            Check("the AI can propose a calibration pass", letter != null);
+            string calibrationText = letter == null ? "" : letter.Text.ToString() + " | " + letter.Label;
+            Check("the calibration letter has no missing strings", calibrationText.Contains("Meridian") && !calibrationText.Contains("RCDC_"), calibrationText.Replace('\n', '|'));
+            if (letter != null)
+            {
+                letter.Choices.ToList()[0].action();
+            }
+            Check("accepting calibration starts it", ai.ActiveBoon == AiBoon.Calibration);
+            float careBeforeCalibration = ai.Care;
+            ai.DevRunDaily();
+            float gainWithCalibration = ai.Care - careBeforeCalibration;
+            ai.DevClear();
+            ai.DevSetCare(50f);
+            float careBeforeNormal = ai.Care;
+            ai.DevRunDaily();
+            float gainNormal = ai.Care - careBeforeNormal;
+            Check("calibration doubles how fast the personality drifts", gainNormal > 0f && Near(gainWithCalibration / gainNormal, ai.Props.calibrationDriftMultiplier, 0.05f),
+                gainWithCalibration.ToString("F3") + " vs " + gainNormal.ToString("F3"));
+            ai.DevClear();
+            ai.DevSetCare(50f);
+            ai.DevSetStability(50f);
+
             // --- Voice, forecast, report, gizmos.
             ai.DevSetRapport(80f);
             foreach (CompServerRack r in AllRacks()) { r.DevSetWear(0.1f); r.DevRefresh(); }
@@ -305,11 +399,13 @@ namespace RimCore.DataCenters
             Check("the AI core offers the directive and report commands", gizmos.OfType<Command_Action>().Count(g => g.icon != null && !g.defaultLabel.Contains("RCDC_")) >= 2);
             Check("the AI voice picks a line for every mood", new[] { 10f, 50f, 90f }.All(r => AiVoice.Line(AiVoice.IdleTopic(r)).Length > 5 && !AiVoice.Line(AiVoice.IdleTopic(r)).Contains("RCDC_")));
 
-            // Leave a rich state for the save/load round trip: a directive, a mood and an unanswered request.
+            // Leave a rich state for the save/load round trip: a directive, a mood, a trait and an unanswered request.
             ai.DevSetRapport(73f);
+            ai.DevSetCare(90f);
+            ai.DevSetStability(50f);
             ai.SetDirective(AiDirective.Curiosity);
             ai.SendRequest(AiBoon.Overclock);
-            Check("state prepared for the save: request pending", ai.HasPendingRequest && ai.Directive == AiDirective.Curiosity);
+            Check("state prepared for the save: request pending, a personality trait formed", ai.HasPendingRequest && ai.Directive == AiDirective.Curiosity && ai.Trait == AiTrait.Meticulous);
             yield return new WaitTicks(60);
         }
     }

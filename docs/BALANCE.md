@@ -1,4 +1,4 @@
-# Balance reference (v0.6.0)
+# Balance reference (v0.7.0)
 
 Every number below is an XML value (`Mod/Defs/RCDC_Buildings.xml`, `RCDC_Items.xml`,
 `RCDC_Research.xml`, `RCDC_Security.xml`) unless noted. Time: 60,000 ticks = 1 day, 2,500 ticks = 1 hour.
@@ -188,12 +188,38 @@ the top; a neglected one drifts to frosty and loses up to half of the AI's benef
 | Compute loan | research uplink x2 for one day | racks produce 20% less for that day (about -70 silver) |
 | Overclock window | output x1.25 for one day | racks give off 40% more heat: needs cooling headroom |
 | Maintenance window | every rack recovers 20% wear at once | output x0.5 for three hours (about -15 silver) |
+| Self-calibration (v0.7.0) | care and stability drift twice as fast for ~4 days | none - purely accelerates whichever trait is already forming |
 
 **Glitches are cosmetic, not punishing.** Mean days between glitches: 45 at rapport 60 or more, 25 at 30 to 59, 12
-below 30. A security-certified data center halves the rate; Adaptive Learning cuts it by 30% more. A glitch is a
-1 to 2 hour reboot (monitoring returns by itself), a one-day sulk (no monitoring or benefits; the console
-covers if you have one), or one rack losing its current cartridge progress (at most about 0.6 day of one rack's
-output, roughly 50 silver). Nothing is destroyed and no hostile event ever fires.
+below 30 (a Steady trait, below, multiplies this by another 1.10). A security-certified data center halves the
+rate; Adaptive Learning cuts it by 30% more. A glitch is a 1 to 2 hour reboot (monitoring returns by itself), a
+one-day sulk (no monitoring or benefits; the console covers if you have one), or one rack losing its current
+cartridge progress (at most about 0.6 day of one rack's output, roughly 50 silver). Nothing is destroyed and no
+hostile event ever fires. Every glitch also costs 8 stability (see below).
+
+## A deeper AI personality (v0.7.0)
+
+Two hidden axes, both 0-100 starting at 50, drift far more slowly than rapport and only ever produce small,
+harmless effects - this sits alongside rapport, it does not replace it.
+
+| Axis | Moves on | Rate |
+| --- | --- | --- |
+| Care | the same daily good/bad-day check as rapport | +0.6/day good, -1/day bad, drifts 0.15/day back to center on an ambiguous day |
+| Stability | every AI glitch | -8 per glitch, +0.8/day recovered on every online day |
+
+Once either axis is at least 25 away from 50, the more extreme of the two becomes the active trait (ties go to
+care):
+
+| Trait | Axis / direction | Effect |
+| --- | --- | --- |
+| Meticulous | care >= 75 | wear multiplier x0.97 on top of the AI's usual x0.9 |
+| Neglected | care <= 25 | flavor only - no mechanical penalty beyond what already caused it |
+| Steady | stability >= 75 | glitch mean days x1.10 (rarer still) |
+| Anxious | stability <= 25 | flavor only - no mechanical penalty |
+
+A trait is slow by design: reaching 75 from 50 needs about 42 good days in a row at +0.6/day with nothing
+resetting it, or losing 25 stability needs roughly 3 glitches close together. It reads as "this AI has settled
+into a personality after a long save," not something the player is actively managing week to week.
 
 ## Data specialization (v0.4.0)
 

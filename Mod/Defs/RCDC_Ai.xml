@@ -112,6 +112,16 @@
         <rebootMaxTicks>5000</rebootMaxTicks>
         <sulkTicks>60000</sulkTicks>
         <milestoneEvery>100</milestoneEvery>
+        <careGainPerDay>0.6</careGainPerDay>
+        <careLossPerDay>1</careLossPerDay>
+        <careDecayPerDay>0.15</careDecayPerDay>
+        <stabilityGainPerDay>0.8</stabilityGainPerDay>
+        <stabilityLossOnGlitch>8</stabilityLossOnGlitch>
+        <traitThreshold>25</traitThreshold>
+        <meticulousWearBonus>0.97</meticulousWearBonus>
+        <steadyGlitchDaysMultiplier>1.10</steadyGlitchDaysMultiplier>
+        <calibrationTicks>240000</calibrationTicks>
+        <calibrationDriftMultiplier>2</calibrationDriftMultiplier>
       </li>
     </comps>
     <designationCategory>RCDC_DataCenter</designationCategory>

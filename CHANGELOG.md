@@ -4,6 +4,22 @@ All notable changes are documented here. This project follows [Semantic Versioni
 `MAJOR.MINOR.PATCH`. The version lives in one place, `Mod/About/About.xml` (`<modVersion>`), and the
 release script stamps the same number into the assembly.
 
+## 0.7.0 - a deeper AI personality
+
+Supports RimWorld 1.5 and 1.6. No DLC and no other mods required. Saves from 0.1.0 through 0.6.0 load unchanged.
+
+### Added
+- **Personality traits**: the AI core now develops a slow-forming personality on top of rapport - two
+  hidden axes, care (day-to-day upkeep: a good/bad day nudges it, same signal as rapport) and stability
+  (how often the AI itself glitches), both 0-100 starting at 50. Once either axis is at least 25 from
+  center, a trait emerges: **Meticulous** or **Neglected** from care, **Steady** or **Anxious** from
+  stability. Effects are small and always harmless, matching the AI's existing "nothing hostile" design:
+  Meticulous trims wear a further 3%, Steady makes glitches 10% rarer still. The current trait shows on
+  the AI core's inspect text and status report, and colours its idle chatter (8 new voice lines, 2 per
+  trait).
+- A new request, **self-calibration**: accepting it doubles how fast care and stability drift for about
+  four days. All numbers are in `CompProperties_AiCore` (`Defs/RCDC_Ai.xml`).
+
 ## 0.6.0 - market dynamics
 
 Supports RimWorld 1.5 and 1.6. No DLC and no other mods required. Saves from 0.1.0 through 0.5.0 load unchanged.

@@ -1,3 +1,10 @@
+[h1]0.7.0 - a deeper AI personality[/h1]
+[list]
+[*] New: Meridian now develops a slow-forming trait on top of rapport - Meticulous or Neglected from how well the data center is kept up, Steady or Anxious from how often it glitches.
+[*] Effects stay small and harmless: Meticulous trims wear a further 3%, Steady makes glitches 10% rarer still. The trait shows on its inspect text and status report, and colours its idle chatter.
+[*] A new request, a self-calibration pass, doubles how fast a trait forms for a few days.
+[/list]
+
 [h1]0.6.0 - market dynamics[/h1]
 [list]
 [*] New: each data cartridge type's price now drifts slowly within a band (85-120% of base value) instead of sitting still.

@@ -31,7 +31,21 @@ namespace RimCore.DataCenters
         None,
         ComputeLoan,
         Overclock,
-        Diagnostics
+        Diagnostics,
+        Calibration
+    }
+
+    /// <summary>
+    /// A slow-forming personality trait, distinct from rapport (which moves daily): it only emerges after a
+    /// long, consistent pattern - care (day-to-day upkeep) or stability (how often the AI itself glitches).
+    /// </summary>
+    public enum AiTrait
+    {
+        Developing,
+        Meticulous,
+        Neglected,
+        Steady,
+        Anxious
     }
 
     public enum AiGlitch
@@ -115,6 +129,19 @@ namespace RimCore.DataCenters
         public int sulkTicks = 60000;
         public int milestoneEvery = 100;
 
+        // Personality traits: care (day-to-day upkeep) and stability (how often the AI itself glitches),
+        // both 0-100 starting at 50. A trait only shows once one axis is at least traitThreshold from center.
+        public float careGainPerDay = 0.6f;
+        public float careLossPerDay = 1f;
+        public float careDecayPerDay = 0.15f;
+        public float stabilityGainPerDay = 0.8f;
+        public float stabilityLossOnGlitch = 8f;
+        public float traitThreshold = 25f;
+        public float meticulousWearBonus = 0.97f;
+        public float steadyGlitchDaysMultiplier = 1.10f;
+        public int calibrationTicks = 240000;
+        public float calibrationDriftMultiplier = 2f;
+
         public CompProperties_AiCore()
         {
             compClass = typeof(CompAiCore);
@@ -169,6 +196,8 @@ namespace RimCore.DataCenters
         private int requestExpireTick;
         private AiBoon lastKind;
         private int lastChatterTick = -999999;
+        private float care = -1f;
+        private float stability = -1f;
 
         // ---- runtime ----------------------------------------------------------------------------
         private CompPowerTrader power;
@@ -263,6 +292,38 @@ namespace RimCore.DataCenters
             }
         }
 
+        public float Care
+        {
+            get { return care < 0f ? 50f : care; }
+        }
+
+        public float Stability
+        {
+            get { return stability < 0f ? 50f : stability; }
+        }
+
+        /// <summary>The AI's slow-forming personality trait, or Developing if neither axis has moved far enough yet.</summary>
+        public AiTrait Trait
+        {
+            get
+            {
+                float careDist = Care - 50f;
+                float stabilityDist = Stability - 50f;
+                float careMag = Mathf.Abs(careDist);
+                float stabilityMag = Mathf.Abs(stabilityDist);
+                float threshold = Props.traitThreshold;
+                if (careMag < threshold && stabilityMag < threshold)
+                {
+                    return AiTrait.Developing;
+                }
+                if (careMag >= stabilityMag)
+                {
+                    return careDist > 0f ? AiTrait.Meticulous : AiTrait.Neglected;
+                }
+                return stabilityDist > 0f ? AiTrait.Steady : AiTrait.Anxious;
+            }
+        }
+
         public string MoodLabel
         {
             get
@@ -300,6 +361,10 @@ namespace RimCore.DataCenters
             m.Monitoring = true;
             m.Forecast = true;
             m.Wear = Scale(p.diagnosticsWear, s);
+            if (Trait == AiTrait.Meticulous)
+            {
+                m.Wear *= p.meticulousWearBonus;
+            }
             switch (directive)
             {
                 case AiDirective.Efficiency:
@@ -414,6 +479,8 @@ namespace RimCore.DataCenters
             Scribe_Values.Look(ref requestExpireTick, "rcdcAiRequestExpire", 0);
             Scribe_Values.Look(ref lastKind, "rcdcAiLastKind", AiBoon.None);
             Scribe_Values.Look(ref lastChatterTick, "rcdcAiLastChatter", -999999);
+            Scribe_Values.Look(ref care, "rcdcAiCare", -1f);
+            Scribe_Values.Look(ref stability, "rcdcAiStability", -1f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 rapport = float.IsNaN(rapport) ? Props.startRapport : Mathf.Clamp(rapport, 0f, 100f);
@@ -533,11 +600,13 @@ namespace RimCore.DataCenters
         private void DailyUpdate(AiStatus status)
         {
             CompProperties_AiCore p = Props;
+            float driftMultiplier = ActiveBoon == AiBoon.Calibration ? p.calibrationDriftMultiplier : 1f;
             if (status != AiStatus.Online)
             {
                 if (booted)
                 {
                     AdjustRapport(-p.dailyOfflineLoss);
+                    DecayCareTowardCenter(p.careDecayPerDay * driftMultiplier);
                 }
                 return;
             }
@@ -558,11 +627,50 @@ namespace RimCore.DataCenters
             if (anyProblem)
             {
                 AdjustRapport(-p.dailyLoss);
+                AdjustCare(-p.careLossPerDay * driftMultiplier);
             }
             else if (anyOperational)
             {
                 AdjustRapport(p.dailyGain);
+                AdjustCare(p.careGainPerDay * driftMultiplier);
             }
+            else
+            {
+                DecayCareTowardCenter(p.careDecayPerDay * driftMultiplier);
+            }
+            AdjustStability(p.stabilityGainPerDay * driftMultiplier);
+        }
+
+        private void DecayCareTowardCenter(float amount)
+        {
+            if (Care > 50f)
+            {
+                AdjustCare(-Mathf.Min(amount, Care - 50f));
+            }
+            else if (Care < 50f)
+            {
+                AdjustCare(Mathf.Min(amount, 50f - Care));
+            }
+        }
+
+        public void AdjustCare(float delta)
+        {
+            care = Mathf.Clamp(Care + delta, 0f, 100f);
+        }
+
+        public void AdjustStability(float delta)
+        {
+            stability = Mathf.Clamp(Stability + delta, 0f, 100f);
+        }
+
+        internal void DevSetCare(float value)
+        {
+            care = Mathf.Clamp(value, 0f, 100f);
+        }
+
+        internal void DevSetStability(float value)
+        {
+            stability = Mathf.Clamp(value, 0f, 100f);
         }
 
         internal void DevRunDaily()
@@ -679,7 +787,15 @@ namespace RimCore.DataCenters
                 return;
             }
             lastChatterTick = now;
-            AiVoice.Announce(parent, AiVoice.Line(AiVoice.IdleTopic(Rapport)), MessageTypeDefOf.NeutralEvent);
+            AiTrait trait = Trait;
+            if (trait != AiTrait.Developing && Rand.Chance(0.4f))
+            {
+                AiVoice.Announce(parent, AiVoice.Line("Trait_" + trait), MessageTypeDefOf.NeutralEvent);
+            }
+            else
+            {
+                AiVoice.Announce(parent, AiVoice.Line(AiVoice.IdleTopic(Rapport)), MessageTypeDefOf.NeutralEvent);
+            }
         }
 
         // ---- directives ----------------------------------------------------------------------------
@@ -725,7 +841,7 @@ namespace RimCore.DataCenters
 
         private AiBoon PickRequestKind()
         {
-            AiBoon[] kinds = { AiBoon.ComputeLoan, AiBoon.Overclock, AiBoon.Diagnostics };
+            AiBoon[] kinds = { AiBoon.ComputeLoan, AiBoon.Overclock, AiBoon.Diagnostics, AiBoon.Calibration };
             AiBoon pick = kinds[Rand.Range(0, kinds.Length)];
             if (pick == lastKind)
             {
@@ -775,6 +891,10 @@ namespace RimCore.DataCenters
                         rack.ApplyWearRelief(p.diagnosticsWearRelief);
                     }
                     break;
+                case AiBoon.Calibration:
+                    boon = kind;
+                    boonUntilTick = now + p.calibrationTicks;
+                    break;
             }
             pendingLetter = null;
             cachedModifiersTick = -1;
@@ -799,6 +919,10 @@ namespace RimCore.DataCenters
             CompProperties_AiCore p = Props;
             float r = Rapport;
             float days = r >= 60f ? p.glitchCalmDays : (r >= 30f ? p.glitchUneasyDays : p.glitchTenseDays);
+            if (Trait == AiTrait.Steady)
+            {
+                days *= p.steadyGlitchDaysMultiplier;
+            }
             float rate = 1f - Mathf.Clamp01(RcdcUpgrades.Current.AiGlitchReduction);
             MapComponent_DataCenterNetwork network = MapComponent_DataCenterNetwork.For(parent.Map);
             if (network != null && network.IsCertified)
@@ -831,6 +955,7 @@ namespace RimCore.DataCenters
         {
             int now = Now;
             nextGlitchTick = now + Mathf.RoundToInt(GlitchMeanTicks() * Rand.Range(0.6f, 1.4f));
+            AdjustStability(-Props.stabilityLossOnGlitch);
             cachedModifiersTick = -1;
             MapComponent_DataCenterNetwork changed = MapComponent_DataCenterNetwork.For(parent.Map);
             if (changed != null)
@@ -880,6 +1005,11 @@ namespace RimCore.DataCenters
             {
                 sb.Append('\n').Append("RCDC_AiWaitingLine".Translate());
             }
+            AiTrait trait = Trait;
+            if (trait != AiTrait.Developing)
+            {
+                sb.Append('\n').Append("RCDC_AiTraitLine".Translate(("RCDC_AiTrait_" + trait).Translate()));
+            }
             return sb.ToString();
         }
 
@@ -910,6 +1040,10 @@ namespace RimCore.DataCenters
                 yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: send request", action = delegate { SendRequest(PickRequestKind()); } };
                 yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: glitch (reboot)", action = delegate { TriggerGlitch(AiGlitch.Reboot); } };
                 yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: glitch (cache)", action = delegate { TriggerGlitch(AiGlitch.CacheError); } };
+                yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: trait Meticulous", action = delegate { DevSetCare(90f); } };
+                yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: trait Neglected", action = delegate { DevSetCare(10f); } };
+                yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: trait Steady", action = delegate { DevSetStability(90f); } };
+                yield return new Command_Action { icon = TexButton.Add, defaultLabel = "DEV: trait Anxious", action = delegate { DevSetStability(10f); } };
             }
         }
 

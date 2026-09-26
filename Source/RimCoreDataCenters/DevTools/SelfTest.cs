@@ -1138,6 +1138,9 @@ namespace RimCore.DataCenters
             public float AiRapport;
             public AiDirective AiDirective;
             public bool AiPending;
+            public float AiCare;
+            public float AiStability;
+            public AiTrait AiTrait;
             public bool ContractActive;
             public ThingDef ContractDef;
             public int ContractQuantity;
@@ -1206,6 +1209,9 @@ namespace RimCore.DataCenters
             s.AiRapport = aiComp == null ? -1f : aiComp.Rapport;
             s.AiDirective = aiComp == null ? AiDirective.Balanced : aiComp.Directive;
             s.AiPending = aiComp != null && aiComp.HasPendingRequest;
+            s.AiCare = aiComp == null ? 50f : aiComp.Care;
+            s.AiStability = aiComp == null ? 50f : aiComp.Stability;
+            s.AiTrait = aiComp == null ? AiTrait.Developing : aiComp.Trait;
             MapComponent_DataContracts contracts = MapComponent_DataContracts.For(Map);
             s.ContractActive = contracts != null && contracts.HasActiveContract;
             s.ContractDef = contracts == null ? null : contracts.ActiveDef;
@@ -1292,6 +1298,9 @@ namespace RimCore.DataCenters
             Check("the AI's rapport and directive persisted", Near(after.AiRapport, snapshot.AiRapport, 0.5f) && after.AiDirective == snapshot.AiDirective && snapshot.AiDirective == AiDirective.Curiosity,
                 snapshot.AiRapport + " " + snapshot.AiDirective + " -> " + after.AiRapport + " " + after.AiDirective);
             Check("the AI's unanswered request persisted", snapshot.AiPending && after.AiPending);
+            Check("the AI's personality trait persisted", Near(after.AiCare, snapshot.AiCare, 0.5f) && Near(after.AiStability, snapshot.AiStability, 0.5f)
+                && after.AiTrait == snapshot.AiTrait && snapshot.AiTrait == AiTrait.Meticulous,
+                snapshot.AiCare + "/" + snapshot.AiStability + " " + snapshot.AiTrait + " -> " + after.AiCare + "/" + after.AiStability + " " + after.AiTrait);
             CompAiCore aiAfter = MapComponent_DataCenterNetwork.For(Map).AiCores.FirstOrDefault();
             ChoiceLetter_AiRequest loadedLetter = Find.LetterStack.LettersListForReading.OfType<ChoiceLetter_AiRequest>().FirstOrDefault();
             Check("the request letter is still in the letter stack and still works", loadedLetter != null && aiAfter != null && loadedLetter.Choices.Count() == 3);

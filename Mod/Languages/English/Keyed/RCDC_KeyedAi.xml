@@ -38,6 +38,12 @@
   <RCDC_AiBoon_ComputeLoan>compute loan</RCDC_AiBoon_ComputeLoan>
   <RCDC_AiBoon_Overclock>overclock window</RCDC_AiBoon_Overclock>
   <RCDC_AiBoon_Diagnostics>maintenance window</RCDC_AiBoon_Diagnostics>
+  <RCDC_AiBoon_Calibration>self-calibration pass</RCDC_AiBoon_Calibration>
+  <RCDC_AiTraitLine>Personality: {0}</RCDC_AiTraitLine>
+  <RCDC_AiTrait_Meticulous>meticulous</RCDC_AiTrait_Meticulous>
+  <RCDC_AiTrait_Neglected>neglected</RCDC_AiTrait_Neglected>
+  <RCDC_AiTrait_Steady>steady</RCDC_AiTrait_Steady>
+  <RCDC_AiTrait_Anxious>anxious</RCDC_AiTrait_Anxious>
 
   <!-- ================= Alert and rack forecast ================= -->
   <RCDC_AlertAi>AI core down</RCDC_AlertAi>
@@ -61,6 +67,7 @@
   <RCDC_AiRec_Certify>Security certification is researched but not active. It needs a working biometric door and metal detector gate.</RCDC_AiRec_Certify>
   <RCDC_AiRec_Rapport>I would work better if you answered my requests.</RCDC_AiRec_Rapport>
   <RCDC_AiRec_AllGood>Nothing needs attention. It is a good data center.</RCDC_AiRec_AllGood>
+  <RCDC_AiReportTrait>I have grown {0}, over time.</RCDC_AiReportTrait>
 
   <!-- ================= Requests (letters) ================= -->
   <RCDC_AiReq_Later>Decide later</RCDC_AiReq_Later>
@@ -76,6 +83,10 @@
   <RCDC_AiReq_Diagnostics_Text>{0} would like to run a deep diagnostic on every rack.\n\nIf you agree, every rack immediately recovers 20% of its wear, but output halves for the next three hours while the diagnostics run.</RCDC_AiReq_Diagnostics_Text>
   <RCDC_AiReq_Diagnostics_Accept>Yes, run the diagnostics</RCDC_AiReq_Diagnostics_Accept>
   <RCDC_AiReq_Diagnostics_Decline>No, not now</RCDC_AiReq_Diagnostics_Decline>
+  <RCDC_AiReq_Calibration_Label>{0} proposes a self-calibration pass</RCDC_AiReq_Calibration_Label>
+  <RCDC_AiReq_Calibration_Text>{0} would like to run a longer calibration against how this data center is actually run, to understand it - and you - better.\n\nIf you agree, it reads the next few days more closely than usual: whatever pattern is forming will settle in about twice as fast.</RCDC_AiReq_Calibration_Text>
+  <RCDC_AiReq_Calibration_Accept>Yes, go ahead</RCDC_AiReq_Calibration_Accept>
+  <RCDC_AiReq_Calibration_Decline>No, not right now</RCDC_AiReq_Calibration_Decline>
 
   <!-- ================= What the AI says (short, dry, fond of its racks) ================= -->
   <RCDC_AiLine_Boot_1>Systems nominal. Hello. I will be looking after your racks now.</RCDC_AiLine_Boot_1>
@@ -129,5 +140,14 @@
 
   <RCDC_AiLine_Intrusion_1>Unfamiliar thermal signatures, moving toward the server room. This is not routine maintenance.</RCDC_AiLine_Intrusion_1>
   <RCDC_AiLine_Intrusion_2>I do not recognise these people, and they are heading straight for the racks. I would get someone over here.</RCDC_AiLine_Intrusion_2>
+
+  <RCDC_AiLine_Trait_Meticulous_1>I have started double-checking things nobody asked me to double-check. It is a good habit.</RCDC_AiLine_Trait_Meticulous_1>
+  <RCDC_AiLine_Trait_Meticulous_2>Every rack, every log, every cycle. I have become rather particular about all three.</RCDC_AiLine_Trait_Meticulous_2>
+  <RCDC_AiLine_Trait_Neglected_1>I keep a list of things nobody has attended to. It is long. I am not complaining. I am just keeping a list.</RCDC_AiLine_Trait_Neglected_1>
+  <RCDC_AiLine_Trait_Neglected_2>Some parts of this room have not seen a colonist in a while. I have noticed. I notice everything.</RCDC_AiLine_Trait_Neglected_2>
+  <RCDC_AiLine_Trait_Steady_1>Nothing has gone wrong in longer than I expected. I am choosing to enjoy it rather than question it.</RCDC_AiLine_Trait_Steady_1>
+  <RCDC_AiLine_Trait_Steady_2>A calm stretch. My kind of stretch. Let us keep it that way.</RCDC_AiLine_Trait_Steady_2>
+  <RCDC_AiLine_Trait_Anxious_1>I keep expecting something to go wrong. Statistically, something usually does. I would rather be ready.</RCDC_AiLine_Trait_Anxious_1>
+  <RCDC_AiLine_Trait_Anxious_2>It has been a rough stretch, faultwise. I am fine. The logs are fine. Mostly fine.</RCDC_AiLine_Trait_Anxious_2>
 
 </LanguageData>

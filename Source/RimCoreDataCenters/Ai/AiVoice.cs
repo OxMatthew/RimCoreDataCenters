@@ -16,7 +16,7 @@ namespace RimCore.DataCenters
             { "Boot", 3 }, { "Idle_Warm", 4 }, { "Idle_Neutral", 4 }, { "Idle_Cold", 4 }, { "Overheat", 3 }, { "Service", 3 },
             { "Milestone", 3 }, { "GlitchReboot", 2 }, { "GlitchSulk", 2 }, { "GlitchCache", 2 }, { "Back", 2 },
             { "Balanced", 2 }, { "Efficiency", 2 }, { "Stewardship", 2 }, { "Curiosity", 2 }, { "Thanks", 2 }, { "Declined", 2 },
-            { "Intrusion", 2 }
+            { "Intrusion", 2 }, { "Trait_Meticulous", 2 }, { "Trait_Neglected", 2 }, { "Trait_Steady", 2 }, { "Trait_Anxious", 2 }
         };
 
         public static string Name

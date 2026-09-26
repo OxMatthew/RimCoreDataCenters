@@ -5,7 +5,7 @@ produce valuable **Data Cartridges** for traders, kept alive by power, precision
 colonists who monitor and service the equipment.
 
 * **Package ID:** `RimCore.DataCenters` (permanent, do not change between releases)
-* **Version:** 0.6.0 &nbsp;|&nbsp; **Supports:** RimWorld 1.5 and 1.6 &nbsp;|&nbsp; **License:** MIT
+* **Version:** 0.7.0 &nbsp;|&nbsp; **Supports:** RimWorld 1.5 and 1.6 &nbsp;|&nbsp; **License:** MIT
 * **Requires:** nothing (no DLC, no Harmony, no other mods)
 
 ## Development approach
@@ -101,12 +101,19 @@ model, every line is a translatable string, and everything it does is bookkeepin
 * **Rapport** (0 to 100) rises a little each healthy day and falls when racks are in trouble or it is offline.
   Every benefit scales from half strength (0) to full strength (100).
 * **Requests:** every 8 to 14 days it writes a letter with a small choice: lend compute to research for a day,
-  run an overclock window, or run a maintenance window. Accept, decline, or leave it: each moves rapport.
+  run an overclock window, run a maintenance window, or (0.7.0) run a self-calibration pass. Accept, decline,
+  or leave it: each moves rapport.
 * **Small risks, nothing hostile:** it may reboot for an hour or two, sulk for a day (no monitoring), or
   lose one rack's current cartridge progress. Rarer with high rapport, half as often in a security-certified
   data center. **Adaptive Learning** makes it 15% stronger and its glitches 30% rarer.
 * It draws 800 W and gives off heat. If it goes down, the **AI core down** alert appears and racks fall back
   to console monitoring.
+* **A deeper personality (0.7.0):** on top of rapport, two hidden axes drift slowly - care (day-to-day upkeep)
+  and stability (how often it glitches), both starting at 50. After a long enough consistent pattern, one
+  settles into a trait: **Meticulous** or **Neglected** from care, **Steady** or **Anxious** from stability.
+  Effects stay small and harmless (Meticulous trims wear a further 3%, Steady makes glitches 10% rarer still);
+  the trait shows on its inspect text and report, and colours its idle chatter. Accepting a self-calibration
+  pass doubles how fast a trait forms for about four days.
 
 ## Data specialization and espionage (0.4.0)
 
